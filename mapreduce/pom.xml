@@ -17,6 +17,7 @@
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<spring.hadoop.version>1.0.1.RC1</spring.hadoop.version>
 		<hadoop.version>1.0.4</hadoop.version>
+		<hadoop.examples>hadoop-examples</hadoop.examples>
 	</properties>
 
 	<profiles>
@@ -24,6 +25,8 @@
 		<id>phd1</id>
 		<properties>
 			<spring.hadoop.version>1.0.1.RC1-phd1</spring.hadoop.version>
+			<hadoop.version>2.0.2-alpha-gphd-2.0.1.0</hadoop.version>
+			<hadoop.examples>hadoop-mapreduce-examples</hadoop.examples>
 		</properties>
 	  </profile>
 	</profiles>
@@ -48,14 +51,7 @@
 
 		<dependency>
 			<groupId>org.apache.hadoop</groupId>
-			<artifactId>hadoop-core</artifactId>
-			<version>${hadoop.version}</version>
-			<scope>compile</scope>
-		</dependency>
-
-		<dependency>
-			<groupId>org.apache.hadoop</groupId>
-			<artifactId>hadoop-examples</artifactId>
+			<artifactId>${hadoop.examples}</artifactId>
 			<version>${hadoop.version}</version>
 			<scope>compile</scope>
 		</dependency>
