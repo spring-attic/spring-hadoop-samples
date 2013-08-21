@@ -8,6 +8,7 @@ Spring for Apache Hadoop.
 Hadoop has a poor out of the box programming model.  Writing applications for Hadoop generally turn into a collection of scripts calling Hadoop command line applications.  Spring for Apache Hadoop provides a consistent programming model and declarative configuration model for developing Hadoop applications.
 
 Together with Spring Integration and Spring Batch, Spring for Apache Hadoop can be used to address a wide range of use cases
+
 * HDFS data access and scripting
 * Data Analysis
 ** MapReduce
