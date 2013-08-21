@@ -1,0 +1,42 @@
+== Sample Applications for Spring for Apache Hadoop
+
+This repository contains several sample applications that show how you can use
+Spring for Apache Hadoop.
+
+=== Overview of Spring for Apache Hadoop
+
+Hadoop has a poor out of the box programming model.  Writing applications for Hadoop generally turn into a collection of scripts calling Hadoop command line applications.  Spring for Apache Hadoop provides a consistent programming model and declarative configuration model for developing Hadoop applications.
+
+Together with Spring Integration and Spring Batch, Spring for Apache Hadoop can be used to address a wide range of use cases
+* HDFS data access and scripting
+* Data Analysis
+** MapReduce
+** Pig
+** Hive
+** Cascading
+* Workflow
+* Data collection and ingestion
+* Event Streams processing
+
+=== Features
+
+* Declarative configuration to create, configure, and parameterize Hadoop connectivity and all job types (MR/Streaming MR/Pig/Hive/Cascading)
+* Simplify HDFS API with added support for JVM scripting languages
+* Runner classes for MR/Pig/Hive/Cascading for small workflows consisting of the following steps HDFS operations -> data analysis -> HDFS operations
+* Helper “Template” classes for Pig/Hive/HBase
+** Execute scripts and queries without worrying about Resource Management Exception Handling and Translation
+** Thread-safety
+* Lightweight Object-Mapping for HBase
+* Hadoop components for Spring Integratio and Spring Batch
+** Spring Batch tasklets for HDFS and data analysis
+** Spring Batch HDFS ItemWriters
+** Spring Integration HDFS channel adapters
+
+== Additional Resources
+
+Many of the samples were taken from the O'Reilly book link:http://shop.oreilly.com/product/0636920024767.do[Spring Data].  Using the book as a companion to the samples is quite helpful to understanding the samples and the full feature set of what can be done using Spring technologies and Hadoop.
+
+The main web site for link:http://www.springsource.org/spring-data/hadoop[Spring for Apache Hadoop]
+
+
+

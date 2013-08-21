@@ -1,0 +1,74 @@
+== HDFS and MapReduce sample
+
+In this sample we will execute HDFS operations and a MapReduce job.  The MapReduce job is the familiar wordcount job.  The HDFS operations are to first copy a data files into HDFS and then to remove any existing files in the MapReduce's output directory.
+
+=== Building and running
+
+Use the following commands to build and run the sample
+
+    $ mvn clean package
+    $ sh ./target/appassembler/bin/wordcount
+
+=== Sample highlights
+
+The file +src/main/resources/META-INF/spring/application-context.xml+ is the main configuration file for the sample.  It uses the Spring Hadoop XML namespace.
+
+To configure the application to connect to the namenode and jobtracker, use the +<configuration/>+ namespace element.  Values in the XML configuration can be replaced using standard Spring container functionality such as the property placeholder
+
+==== Configuring Hadoop connectivity
+----
+<context:property-placeholder location="hadoop.properties"/>
+
+<configuration>
+  fs.default.name=${hd.fs}
+  mapred.job.tracker=${hd.jt}
+</configuration>
+----
+
+To declaratively configure a Java based MapReduce jobs, use the XML namespace +<job/>+ element.
+
+==== Declaring a Job
+----
+<job id="wordcountJob"
+     input-path="${wordcount.input.path}" 
+     output-path="${wordcount.output.path}"
+     libs="file:${app.repo}/hadoop-examples-*.jar"
+     mapper="org.apache.hadoop.examples.WordCount.TokenizerMapper"
+     reducer="org.apache.hadoop.examples.WordCount.IntSumReducer"/>
+----
+
+HDFS scripting is performed using the XML namespace +<script/>+ element.
+
+==== Declaring a parameterized HDFS script
+----
+<script id="setupScript" location="copy-files.groovy">
+  <property name="localSourceFile" value="${app.home}/${localSourceFile}"/>
+  <property name="inputDir" value="${wordcount.input.path}"/>
+  <property name="outputDir" value="${wordcount.output.path}"/>
+</script>	 
+----
+
+The Groovy script that creates output directory, copies local file to HDFS and removes output HDFS directory is shown below
+----
+// use the shell (made available under variable fsh)
+
+if (!fsh.test(inputDir)) {
+   fsh.mkdir(inputDir); 
+   fsh.copyFromLocal(localSourceFile, inputDir); 
+   fsh.chmod(700, inputDir)
+}
+if (fsh.test(outputDir)) {
+   fsh.rmr(outputDir)
+}
+----
+
+Now that the script and job are managed by the container, they can be dependency injected into other Spring managed beans.  Use the XML namespace +<job-runner/>+ element to configure the list of jobs and HDFS operations actions to execute.  The job-runner element has +pre-action+, +job-ref+, and +post-action+ tags that take a comma delimited list of references to scripts and jobs.
+
+==== Declaring a JobRunner
+----
+<job-runner id="runner" run-at-startup="true"
+    	    pre-action="setupScript"
+	    job-ref="wordcountJob" />	
+----
+
+
