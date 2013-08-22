@@ -1,0 +1,149 @@
+description = 'Spring Yarn Examples'
+defaultTasks 'build'
+
+apply plugin: 'base'
+
+buildscript {
+	repositories {
+		maven { url "http://repo.springsource.org/plugins-release" }
+	}
+	dependencies {
+		classpath("org.springframework.build.gradle:docbook-reference-plugin:0.2.6")
+	}
+}
+
+allprojects {
+	group = 'org.springframework.yarn'
+	logging.captureStandardOutput LogLevel.DEBUG
+ 
+	repositories {
+		// Public Spring artifacts
+		mavenLocal()
+		//maven { url 'http://repo.springsource.org/libs-milestone' }
+		//maven { url 'http://repo.springsource.org/libs-snapshot'}
+		maven { url 'http://repo.springsource.org/libs-release'}
+		//maven { url "http://repo.springsource.org/plugins-release"}
+		mavenCentral()
+	}
+}
+
+subprojects { subproject ->
+	apply plugin: 'idea'
+	apply plugin: 'java'
+	apply plugin: 'eclipse'
+	apply plugin: 'maven'
+	
+	sourceCompatibility = 1.6
+	targetCompatibility = 1.6
+	
+	eclipse {
+		project {
+			natures += 'org.springframework.ide.eclipse.core.springnature'
+		}
+	}
+
+	[compileJava, compileTestJava]*.options*.compilerArgs = ["-Xlint:-serial", "-Xlint:-options"]
+
+	task sourcesJar(type: Jar) {
+		classifier = 'sources'
+	}
+
+}
+
+def yarnExampleProjects() {
+	subprojects.findAll { project ->
+		project.name.contains('yarn-examples-') && project.name != 'yarn-examples-common'
+	}
+}
+
+def yarnExampleProjectsWithCommon() {
+	subprojects.findAll { project ->
+		project.name.contains('yarn-examples-')
+	}
+}
+
+def yarnExampleProjectsCommon() {
+	subprojects.findAll { project ->
+		project.name == 'yarn-examples-common'
+	}
+}
+
+configure(yarnExampleProjectsWithCommon()) {
+	configurations {
+		hadoopruntime.exclude group: 'log4j'
+		hadoopruntime.exclude group: 'org.slf4j'
+		hadoopruntime.exclude group: 'org.apache.hadoop'
+		hadoopruntime.exclude group: 'commons-logging'
+		hadoopruntime.exclude group: 'org.codehaus.jettison'
+		hadoopruntime.exclude group: 'com.thoughtworks.xstream'
+	}
+	dependencies {
+		compile "org.springframework.batch:spring-batch-core:$springBatchVersion"
+		compile "org.springframework.batch:spring-batch-infrastructure:$springBatchVersion"
+		compile "org.springframework.data:spring-yarn-batch:$springDataVersion"
+		runtime "org.springframework.data:spring-data-hadoop:$springDataVersion"
+		runtime "org.springframework.data:spring-data-hadoop-core:$springDataVersion"
+		runtime "org.apache.hadoop:hadoop-yarn-api:$hadoopVersion"
+		runtime "org.apache.hadoop:hadoop-yarn-common:$hadoopVersion"
+		runtime "org.apache.hadoop:hadoop-common:$hadoopVersion"
+		runtime("org.apache.hadoop:hadoop-hdfs:$hadoopVersion") {
+			exclude group: 'commons-daemon'
+		}
+		runtime "log4j:log4j:$log4jVersion"
+		runtime "org.slf4j:slf4j-log4j12:$slf4jVersion"
+		testCompile "org.springframework.data:spring-yarn-test:$springDataVersion"
+		testCompile "org.hamcrest:hamcrest-core:$hamcrestVersion"
+		testCompile "org.hamcrest:hamcrest-library:$hamcrestVersion"
+
+		hadoopruntime configurations.runtime
+	}
+
+	task testJar(type: Jar) {
+		classifier = 'tests'
+		from sourceSets.test.output
+	}
+
+	assemble.dependsOn = ['jar', 'testJar']
+
+	clean.doLast {ant.delete(dir: "target")}
+
+}
+
+configure(yarnExampleProjectsCommon()) {
+	task copyLibDeps(type: Copy) {
+		into "$buildDir/dependency-libs"
+		from configurations.hadoopruntime
+	}
+}
+
+configure(yarnExampleProjects()) { yarnExampleProject ->
+	dependencies {
+		compile project(":yarn-examples-common")
+	}
+	
+	task run(type: JavaExec) {
+		description = 'Runs the application'
+		classpath = sourceSets.main.runtimeClasspath
+		standardInput = System.in
+		systemProperties = System.getProperties()
+		if (rootProject.hasProperty('args')) {
+			args = ["${rootProject.getProperty('args')}"]
+		}  
+	}
+
+	task copyHadoopRuntimeDeps(type: Copy) {
+		into "$buildDir/dependency-libs"
+		from configurations.hadoopruntime
+	}
+
+	build.dependsOn(copyHadoopRuntimeDeps)
+
+	apply {
+		task "run-${yarnExampleProject.name}"(dependsOn:'classes') << {
+			def mainClass = yarnExampleProject.hasProperty('main')? "${yarnExampleProject.getProperty('main')}":'CommonMain'
+			yarnExampleProject.tasks['run'].main = "org.springframework.yarn.examples.$mainClass"
+			yarnExampleProject.tasks['run'].execute()
+		}
+	}
+}
+

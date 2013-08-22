@@ -1,0 +1,12 @@
+rootProject.name = 'spring-yarn-examples'
+
+include ':yarn:simple-command',':yarn:list-applications',':yarn:multi-context',':yarn:kill-application',':yarn:batch-partition',':yarn:batch-files',':yarn:custom-amservice',':yarn:batch-amjob'
+
+rootProject.children.find {
+	if (it.name == 'yarn') {
+		it.name = 'yarn-examples-common'		
+		it.children.each {
+			it.name = 'yarn-examples-' + it.name
+		}
+	}
+}

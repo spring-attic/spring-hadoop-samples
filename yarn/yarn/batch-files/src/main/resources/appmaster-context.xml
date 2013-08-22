@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:yarn="http://www.springframework.org/schema/yarn"
+	xmlns:yarn-int="http://www.springframework.org/schema/yarn/integration"
+	xmlns:yarn-batch="http://www.springframework.org/schema/yarn/batch"
+	xmlns:hdp="http://www.springframework.org/schema/hadoop"
+	xmlns:int="http://www.springframework.org/schema/integration"
+	xmlns:int-ip="http://www.springframework.org/schema/integration/ip"
+	xmlns:batch="http://www.springframework.org/schema/batch"
+	xmlns:p="http://www.springframework.org/schema/p"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xsi:schemaLocation="http://www.springframework.org/schema/yarn http://www.springframework.org/schema/yarn/spring-yarn.xsd
+		http://www.springframework.org/schema/yarn/integration http://www.springframework.org/schema/yarn/integration/spring-yarn-integration.xsd
+		http://www.springframework.org/schema/yarn/batch http://www.springframework.org/schema/yarn/batch/spring-yarn-batch.xsd
+		http://www.springframework.org/schema/integration http://www.springframework.org/schema/integration/spring-integration.xsd
+		http://www.springframework.org/schema/integration/ip http://www.springframework.org/schema/integration/ip/spring-integration-ip.xsd
+		http://www.springframework.org/schema/hadoop http://www.springframework.org/schema/hadoop/spring-hadoop.xsd
+		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/batch http://www.springframework.org/schema/batch/spring-batch.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd
+		http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util.xsd">
+
+	<bean id="yarnEventPublisher" class="org.springframework.yarn.event.DefaultYarnEventPublisher"/>
+
+	<context:property-placeholder location="hadoop.properties"/>
+
+	<yarn:configuration register-url-handler="true">
+		fs.defaultFS=${syarn.hd.fs}
+		yarn.resourcemanager.address=${syarn.hd.rm}
+		yarn.resourcemanager.scheduler.address=${syarn.hd.scheduler}
+	</yarn:configuration>
+
+	<yarn:localresources>
+		<yarn:hdfs path="/app/batch-files/*.jar"/>
+		<yarn:hdfs path="/lib/*"/>
+	</yarn:localresources>
+
+	<yarn:environment>
+		<yarn:classpath/>
+	</yarn:environment>
+
+	<yarn-batch:master>
+		<yarn-batch:container-runner/>
+	</yarn-batch:master>
+
+	<hdp:resource-loader id="hadoopResourceLoader" configuration-ref="yarnConfiguration"/>
+	<bean id="defaultResourceLoaders" class="org.springframework.data.hadoop.fs.CustomResourceLoaderRegistrar" p:loader-ref="hadoopResourceLoader" />
+
+	<!-- appmaster service client -->
+
+	<bean id="jobRepositoryRemoteService" class="org.springframework.yarn.batch.repository.JobRepositoryRemoteService" >
+		<property name="mapJobRepositoryFactoryBean" ref="&amp;jobRepository"/>
+	</bean>
+	<bean id="batchService" class="org.springframework.yarn.batch.repository.BatchAppmasterService" >
+		<property name="jobRepositoryRemoteService" ref="jobRepositoryRemoteService"/>
+	</bean>
+
+	<bean id="mapper" class="org.springframework.yarn.integration.support.Jackson2ObjectMapperFactoryBean" />
+
+	<yarn-int:converter>
+		<bean class="org.springframework.yarn.integration.convert.MindObjectToHolderConverter">
+			<constructor-arg ref="mapper"/>
+		</bean>
+	</yarn-int:converter>
+
+	<yarn-int:converter>
+		<bean class="org.springframework.yarn.integration.convert.MindHolderToObjectConverter">
+			<constructor-arg ref="mapper"/>
+			<constructor-arg value="org.springframework.yarn.batch.repository.bindings"/>
+		</bean>
+	</yarn-int:converter>
+
+	<yarn-int:amservice service-ref="batchService"/>
+
+	<!-- batch config -->
+
+	<bean id="partitionHandler" class="org.springframework.yarn.batch.partition.HdfsSplitBatchPartitionHandler">
+		<constructor-arg index="0"><ref bean="yarnAppmaster"/></constructor-arg>
+		<constructor-arg index="1"><ref bean="yarnConfiguration"/></constructor-arg>
+		<property name="stepName" value="remoteStep"/>
+	</bean>
+
+	<bean id="partitioner" class="org.springframework.yarn.batch.partition.MultiHdfsResourcePartitioner" scope="step">
+		<property name="resources" value="#{jobParameters['input']}"/>
+		<property name="configuration" ref="yarnConfiguration"/>
+		<property name="splitSize" value="2"/>
+		<property name="forceSplit" value="true"/>
+	</bean>
+
+	<bean id="transactionManager" class="org.springframework.batch.support.transaction.ResourcelessTransactionManager"/>
+
+	<bean id="jobRepository" class="org.springframework.batch.core.repository.support.MapJobRepositoryFactoryBean">
+		<property name="transactionManager" ref="transactionManager"/>
+	</bean>
+
+	<bean id="jobExplorer" class="org.springframework.batch.core.explore.support.MapJobExplorerFactoryBean">
+		<property name="repositoryFactory" ref="&amp;jobRepository" />
+	</bean>
+
+	<batch:job id="job">
+		<batch:step id="master">
+			<batch:partition partitioner="partitioner" handler="partitionHandler"/>
+		</batch:step>
+	</batch:job>
+
+	<bean id="jobLauncher" class="org.springframework.batch.core.launch.support.SimpleJobLauncher">
+		<property name="jobRepository" ref="jobRepository"/>
+	</bean>
+
+</beans>

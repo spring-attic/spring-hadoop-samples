@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:yarn="http://www.springframework.org/schema/yarn"
+	xmlns:yarn-int="http://www.springframework.org/schema/yarn/integration"
+	xmlns:batch="http://www.springframework.org/schema/batch"
+	xmlns:hdp="http://www.springframework.org/schema/hadoop"
+	xmlns:int="http://www.springframework.org/schema/integration"
+	xmlns:int-ip="http://www.springframework.org/schema/integration/ip"
+	xmlns:p="http://www.springframework.org/schema/p"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xsi:schemaLocation="http://www.springframework.org/schema/yarn http://www.springframework.org/schema/yarn/spring-yarn.xsd
+		http://www.springframework.org/schema/yarn/integration http://www.springframework.org/schema/yarn/integration/spring-yarn-integration.xsd
+		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd
+		http://www.springframework.org/schema/batch http://www.springframework.org/schema/batch/spring-batch.xsd
+		http://www.springframework.org/schema/hadoop http://www.springframework.org/schema/hadoop/spring-hadoop.xsd
+		http://www.springframework.org/schema/integration http://www.springframework.org/schema/integration/spring-integration.xsd
+		http://www.springframework.org/schema/integration/ip http://www.springframework.org/schema/integration/ip/spring-integration-ip.xsd
+		http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util.xsd">
+
+	<context:property-placeholder location="hadoop.properties" system-properties-mode="OVERRIDE"/>
+
+	<yarn:configuration register-url-handler="true">
+		fs.defaultFS=${syarn.hd.fs}
+	</yarn:configuration>
+
+	<hdp:resource-loader id="hadoopResourceLoader" configuration-ref="yarnConfiguration"/>
+
+	<bean id="defaultResourceLoaders" class="org.springframework.data.hadoop.fs.CustomResourceLoaderRegistrar" p:loader-ref="hadoopResourceLoader" />
+
+	<bean id="transactionManager" class="org.springframework.batch.support.transaction.ResourcelessTransactionManager"/>
+
+	<bean id="jobRepository" class="org.springframework.yarn.batch.repository.RemoteJobRepositoryFactoryBean">
+		<property name="transactionManager" ref="transactionManager"/>
+		<property name="appmasterScOperations" ref="yarnAmserviceClient"/>
+	</bean>
+
+	<bean id="jobExplorer" class="org.springframework.yarn.batch.repository.RemoteJobExplorerFactoryBean">
+		<property name="repositoryFactory" ref="&amp;jobRepository" />
+	</bean>
+
+	<bean id="itemReader" class="org.springframework.yarn.batch.item.HdfsFileSplitItemReader" scope="step">
+		<property name="resource" value="#{stepExecutionContext['fileName']}"/>
+		<property name="splitStart" value="#{stepExecutionContext['splitStart']}"/>
+		<property name="splitLength" value="#{stepExecutionContext['splitLength']}"/>
+		<property name="lineDataMapper">
+			<bean class="org.springframework.yarn.batch.item.PassThroughLineDataMapper"/>
+		</property>
+	</bean>
+
+	<bean id="itemWriter" class="org.springframework.yarn.examples.LoggingItemWriter"/>
+
+	<batch:step id="remoteStep">
+		<batch:tasklet transaction-manager="transactionManager">
+			<batch:chunk commit-interval="1000" reader="itemReader" writer="itemWriter"/>
+		</batch:tasklet>
+	</batch:step>
+
+	<bean id="stepLocator" class="org.springframework.yarn.batch.partition.BeanFactoryStepLocator"/>
+
+	<bean id="mapper" class="org.springframework.yarn.integration.support.Jackson2ObjectMapperFactoryBean" />
+
+	<yarn-int:converter>
+		<bean class="org.springframework.yarn.integration.convert.MindObjectToHolderConverter">
+			<constructor-arg ref="mapper"/>
+		</bean>
+	</yarn-int:converter>
+
+	<yarn-int:converter>
+		<bean class="org.springframework.yarn.integration.convert.MindHolderToObjectConverter">
+			<constructor-arg ref="mapper"/>
+			<constructor-arg value="org.springframework.yarn.batch.repository.bindings"/>
+		</bean>
+	</yarn-int:converter>
+
+	<yarn-int:amservice-client
+		service-impl="org.springframework.yarn.integration.ip.mind.DefaultMindAppmasterServiceClient"
+		host="${syarn.amservice.host}"
+		port="${syarn.amservice.port}" />
+
+	<bean id="yarnContainer" class="org.springframework.yarn.batch.container.DefaultBatchYarnContainer">
+		<property name="stepLocator" ref="stepLocator"/>
+		<property name="jobExplorer" ref="jobExplorer"/>
+		<property name="integrationServiceClient" ref="yarnAmserviceClient"/>
+	</bean>
+
+</beans>
