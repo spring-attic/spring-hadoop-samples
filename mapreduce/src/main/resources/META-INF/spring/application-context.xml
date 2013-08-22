@@ -11,7 +11,9 @@
 
 	<configuration>
 	  fs.default.name=${hd.fs}
-      mapred.job.tracker=${hd.jt}
+	  mapred.job.tracker=${hd.jt}
+	  yarn.resourcemanager.address=${hd.rm}
+	  mapreduce.framework.name=${mr.fw}
 	</configuration>
 
 	<job id="wordcountJob"

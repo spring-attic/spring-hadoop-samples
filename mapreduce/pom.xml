@@ -18,6 +18,7 @@
 		<spring.hadoop.version>1.0.1.RC1</spring.hadoop.version>
 		<hadoop.version>1.0.4</hadoop.version>
 		<hadoop.examples>hadoop-examples</hadoop.examples>
+		<mapreduce.framework>classic</mapreduce.framework>
 	</properties>
 
 	<profiles>
@@ -27,7 +28,16 @@
 			<spring.hadoop.version>1.0.1.RC1-phd1</spring.hadoop.version>
 			<hadoop.version>2.0.2-alpha-gphd-2.0.1.0</hadoop.version>
 			<hadoop.examples>hadoop-mapreduce-examples</hadoop.examples>
+			<mapreduce.framework>yarn</mapreduce.framework>
 		</properties>
+		<dependencies>
+			<dependency>
+				<groupId>org.apache.hadoop</groupId>
+				<artifactId>hadoop-mapreduce-client-jobclient</artifactId>
+				<version>${hadoop.version}</version>
+				<scope>runtime</scope>
+			</dependency>
+		</dependencies>
 	  </profile>
 	</profiles>
 
@@ -91,6 +101,7 @@
 							<name>wordcount</name>
 						</program>
 					</programs>
+					<extraJvmArguments>-Dmr.fw=${mapreduce.framework}</extraJvmArguments>
 				</configuration>
 				<executions>
 					<execution>
