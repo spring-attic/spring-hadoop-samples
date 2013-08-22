@@ -10,7 +10,7 @@
 		<groupId>org.springframework.samples</groupId>
 		<artifactId>spring-hadoop-samples</artifactId>
 		<version>1.0.0.BUILD-SNAPSHOT</version>
-		<relativePath>../pom.xml</relativePath>
+		<relativePath>../parent/pom.xml</relativePath>
 	</parent>
 
 	<properties>
