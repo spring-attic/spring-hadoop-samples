@@ -1,0 +1,20 @@
+== Pig samples
+
+There are three sample applications that use Pig, each sample getting more sophisticated in its use of Pig.  The examples are
+
+* A simple /etc/passwd file analysis application using PigRunner
+* Using PigTemplate to execute Pig scripts
+* A more complex Apache Log file analysis example using PigRunner
+
+=== Building and running
+
+Use the following commands to build and run the sample
+
+    $ mvn clean package
+    $ sh ./target/appassembler/bin/pigApp
+    $ sh ./target/appassembler/bin/pigAppWithRepository
+    $ sh ./target/appassembler/bin/pigAppWithApacheLogs
+
+
+
+
