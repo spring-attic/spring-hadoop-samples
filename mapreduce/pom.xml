@@ -22,23 +22,23 @@
 	</properties>
 
 	<profiles>
-	  <profile>
-		<id>phd1</id>
-		<properties>
-			<spring.hadoop.version>1.0.1.RC1-phd1</spring.hadoop.version>
-			<hadoop.version>2.0.2-alpha-gphd-2.0.1.0</hadoop.version>
-			<hadoop.examples>hadoop-mapreduce-examples</hadoop.examples>
-			<mapreduce.framework>yarn</mapreduce.framework>
-		</properties>
-		<dependencies>
-			<dependency>
-				<groupId>org.apache.hadoop</groupId>
-				<artifactId>hadoop-mapreduce-client-jobclient</artifactId>
-				<version>${hadoop.version}</version>
-				<scope>runtime</scope>
-			</dependency>
-		</dependencies>
-	  </profile>
+		<profile>
+			<id>phd1</id>
+			<properties>
+				<spring.hadoop.version>1.0.1.RC1-phd1</spring.hadoop.version>
+				<hadoop.version>2.0.2-alpha-gphd-2.0.1.0</hadoop.version>
+				<hadoop.examples>hadoop-mapreduce-examples</hadoop.examples>
+				<mapreduce.framework>yarn</mapreduce.framework>
+			</properties>
+			<dependencies>
+				<dependency>
+					<groupId>org.apache.hadoop</groupId>
+					<artifactId>hadoop-mapreduce-client-jobclient</artifactId>
+					<version>${hadoop.version}</version>
+					<scope>runtime</scope>
+				</dependency>
+			</dependencies>
+		</profile>
 	</profiles>
 
 	<dependencies>
@@ -85,13 +85,15 @@
 				<version>1.2.2</version>
 				<configuration>
 					<repositoryLayout>flat</repositoryLayout>
+					<configurationSourceDirectory>src/main/config</configurationSourceDirectory>
+					<copyConfigurationDirectory>true</copyConfigurationDirectory>
+					<extraJvmArguments>-Dmr.fw=${mapreduce.framework}</extraJvmArguments>
 					<programs>
 						<program>
 							<mainClass>org.springframework.samples.hadoop.mapreduce.Wordcount</mainClass>
 							<name>wordcount</name>
 						</program>
 					</programs>
-					<extraJvmArguments>-Dmr.fw=${mapreduce.framework}</extraJvmArguments>
 				</configuration>
 				<executions>
 					<execution>
