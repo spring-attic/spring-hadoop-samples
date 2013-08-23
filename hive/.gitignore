@@ -1,0 +1,8 @@
+/metastore_db/
+/TempStatsStore/
+/*.log
+/.settings/
+/target/
+/.idea/
+/hive_uri_hits/
+/*.iml

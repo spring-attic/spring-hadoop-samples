@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans:beans xmlns="http://www.springframework.org/schema/hadoop"
+	xmlns:beans="http://www.springframework.org/schema/beans"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+	  http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd
+	  http://www.springframework.org/schema/hadoop http://www.springframework.org/schema/hadoop/spring-hadoop.xsd">
+
+	<context:property-placeholder location="hadoop.properties,hive.properties"/>
+
+	<configuration>
+		fs.default.name=${hd.fs}
+		mapred.job.tracker=${hd.jt}
+	</configuration>
+
+	<hive-server port="${hive.port}"
+				 properties-location="hive-server.properties"/>
+
+	<hive-client-factory host="${hive.host}" port="${hive.port}"/>
+	 
+	<hive-runner id="hiveRunner" run-at-startup="false" >
+		<script location="apache-log-simple.hql">
+				<arguments>
+					hiveContribJar=${app.repo}/hive-contrib-0.9.0.jar
+					localInPath="${app.home}/data/apache.log"
+				</arguments>
+		</script>			
+	</hive-runner>
+
+	
+</beans:beans>
