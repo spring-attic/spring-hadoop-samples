@@ -136,6 +136,7 @@ configure(yarnExampleProjects()) { yarnExampleProject ->
 		from configurations.hadoopruntime
 	}
 
+	test.dependsOn(copyHadoopRuntimeDeps)
 	build.dependsOn(copyHadoopRuntimeDeps)
 
 	apply {
