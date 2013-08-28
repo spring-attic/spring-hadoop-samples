@@ -33,3 +33,7 @@ project('yarn-examples-batch-amjob') {
 project('yarn-examples-custom-amservice') {
   description = 'Spring Yarn with Custom Application Master Service Example'
 }
+
+project('yarn-examples-restart-context') {
+  description = 'Spring Yarn with Restart Context Example'
+}
