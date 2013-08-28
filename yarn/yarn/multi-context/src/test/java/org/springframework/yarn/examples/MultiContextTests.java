@@ -49,7 +49,7 @@ import org.springframework.yarn.test.junit.AbstractYarnClusterTests;
 public class MultiContextTests extends AbstractYarnClusterTests {
 
 	@Test
-	@Timed(millis=70000)
+	@Timed(millis=120000)
 	public void testAppSubmission() throws Exception {
 		YarnApplicationState state = submitApplicationAndWait();
 		assertNotNull(state);
