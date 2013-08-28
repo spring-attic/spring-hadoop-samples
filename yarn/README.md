@@ -20,6 +20,7 @@ This project provides a number of examples to get you started using Spring Yarn 
 * list-applications - Example of listing applications known to resource manager
 * multi-context - Example of running a spring application context on multiple containers
 * simple-command - Example of running a command with containers
+* restart-context - Example of custom failed container handling 
 
 # Imporing Examples to IDE
 
