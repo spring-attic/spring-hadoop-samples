@@ -142,7 +142,17 @@ configure(yarnExampleProjects()) { yarnExampleProject ->
 	apply {
 		task "run-${yarnExampleProject.name}"(dependsOn:'classes') << {
 			def mainClass = yarnExampleProject.hasProperty('main')? "${yarnExampleProject.getProperty('main')}":'CommonMain'
+			def nokillArg = yarnExampleProject.hasProperty('nokill') ? "${yarnExampleProject.getProperty('nokill')}" : null
+			def appidArg = yarnExampleProject.hasProperty('appid') ? "${yarnExampleProject.getProperty('appid')}" : null
+			def args = []
 			yarnExampleProject.tasks['run'].main = "org.springframework.yarn.examples.$mainClass"
+			if (nokillArg) {
+				args.add("nokill=$nokillArg")
+			}
+			if (appidArg) {
+				args.add("appid=$appidArg")
+			}
+			yarnExampleProject.tasks['run'].args = args
 			yarnExampleProject.tasks['run'].execute()
 		}
 	}

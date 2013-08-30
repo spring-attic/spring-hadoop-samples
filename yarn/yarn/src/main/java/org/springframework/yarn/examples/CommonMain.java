@@ -15,40 +15,23 @@
  */
 package org.springframework.yarn.examples;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
-import org.springframework.context.ConfigurableApplicationContext;
-import org.springframework.context.support.ClassPathXmlApplicationContext;
-import org.springframework.yarn.client.YarnClient;
+import org.springframework.yarn.YarnSystemConstants;
+import org.springframework.yarn.client.CommandLineClientRunner;
 
 /**
- * Main class for examples.
+ * Main class for examples submitting application.
  *
  * @author Janne Valkealahti
  *
  */
-public class CommonMain {
-
-	private static final Log log = LogFactory.getLog(CommonMain.class);
+public class CommonMain extends CommandLineClientRunner {
 
 	public static void main(String args[]) {
-
-		ConfigurableApplicationContext context = null;
-
-		try {
-			context = new ClassPathXmlApplicationContext("application-context.xml");
-			System.out.println("Submitting example");
-			YarnClient client = (YarnClient) context.getBean("yarnClient");
-			client.submitApplication();
-			System.out.println("Submitted example");
-		} catch (Throwable e) {
-			log.error("Error in main method", e);
-		} finally {
-			if (context != null) {
-				context.close();
-			}
-		}
-
+		new CommonMain().doMain(new String[] {
+				YarnSystemConstants.DEFAULT_CONTEXT_FILE_CLIENT,
+				YarnSystemConstants.DEFAULT_ID_CLIENT,
+				CommandLineClientRunner.OPT_SUBMIT
+		});
 	}
 
 }

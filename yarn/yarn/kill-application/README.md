@@ -16,6 +16,15 @@ To run this example against remote Hadoop cluster:
 
 		./gradlew -q run-yarn-examples-kill-application -Dhd.fs=hdfs://192.168.223.170:8020 -Dhd.rm=192.168.223.170:8032 -Dlocalresources.remote=hdfs://192.168.223.170:8020
 
+To run this example against local Hadoop cluster and not automatically killing the application:
+
+		./gradlew -q run-yarn-examples-kill-application -Pnokill=true
+
+To run this example against local Hadoop cluster and kill existing application. You can get the application id
+either from Hadoop Resource Manager ui or using list-applications example:
+
+		./gradlew -q run-yarn-examples-kill-application -Pappid=application_1377856222179_0008
+
 # Details
 
 This example launches an simple application with a container whose only task
