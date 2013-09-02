@@ -22,7 +22,7 @@
 	<context:property-placeholder location="hadoop.properties" system-properties-mode="OVERRIDE"/>
 
 	<yarn:configuration register-url-handler="true">
-		fs.defaultFS=${syarn.hd.fs}
+		fs.defaultFS=${SHDP_HD_FS}
 	</yarn:configuration>
 
 	<hdp:resource-loader id="hadoopResourceLoader" configuration-ref="yarnConfiguration"/>
@@ -76,8 +76,8 @@
 
 	<yarn-int:amservice-client
 		service-impl="org.springframework.yarn.integration.ip.mind.DefaultMindAppmasterServiceClient"
-		host="${syarn.amservice.host}"
-		port="${syarn.amservice.port}" />
+		host="${SHDP_AMSERVICE_HOST}"
+		port="${SHDP_AMSERVICE_PORT}" />
 
 	<bean id="yarnContainer" class="org.springframework.yarn.batch.container.DefaultBatchYarnContainer">
 		<property name="stepLocator" ref="stepLocator"/>
