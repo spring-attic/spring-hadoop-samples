@@ -1,11 +1,13 @@
 Spring Yarn Examples
 ====================
 
-NOTE: These samples are currently configured to use local Snapshot build
-from spring-hadoop master.
-To deploy Spring Hadoop 2.x snapshot to local maven repository, use command:
+NOTE: These samples are currently configured to use Spring Hadoop 2.0.0.M1
+release. You will get Hadoop dependencies through different maven artifacts
+for Spring Hadoop. Currently vanilla Hadoop 2.0.6-alpha and Pivotal HD 1.0
+are supported. Samples default to vanilla Hadoop.
 ```
-# gradlew -Pdistro=hadoop20 clean install -x test
+# gradlew -Pdistro=hadoop20 clean build -x test
+# gradlew -Pdistro=phd1 clean build -x test
 ```
 
 This project provides a number of examples to get you started using Spring Yarn and Spring Hadoop. These examples are designed to work with [Spring Hadoop] (http://www.springsource.org/spring-hadoop) 2.0 or higher and are organized into the following sub projects:
@@ -85,12 +87,11 @@ Every example jar file  has its own directory location in HDFS.
 ...
 ```
 
-These tests depends on vanilla Hadoop 2.0.5. JUnit tests are not
-dependant on a running cluster but you need to have Hadoop installed
-on a host where tests are executed. Also familiar enviroment variables
-shown below must exist.
+JUnit tests are not dependant on a running cluster but you need to have
+Hadoop installed on a host where tests are executed. Also familiar
+enviroment variables shown below must exist. 
 ```
-export PATH=$PATH:/usr/local/javas/java/bin:/usr/local/thrift/bin
+export PATH=$PATH:/usr/local/javas/java/bin
 export JAVA_HOME=/usr/local/javas/java
 export JRE_HOME=/usr/local/javas/java/jre
 export HADOOP_HOME=/usr/local/hadoops/hadoop
