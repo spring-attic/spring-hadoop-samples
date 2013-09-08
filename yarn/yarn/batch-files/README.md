@@ -7,16 +7,16 @@ on different containers.
 
 To test this example:
 
-		./gradlew clean :yarn-examples-common:yarn-examples-batch-files:build
+		# gradlew clean :yarn-examples-common:yarn-examples-batch-files:build
 
 To run this example against local Hadoop cluster:
 
-		./gradlew -q run-yarn-examples-batch-files
-		./gradlew -q run-yarn-examples-batch-files -Dfiles=/path/hdfs/files
+		# gradlew -q run-yarn-examples-batch-files
+		# gradlew -q run-yarn-examples-batch-files -Dfiles=/path/hdfs/files
 
 To run this example against remote Hadoop cluster:
 
-		./gradlew -q run-yarn-examples-batch-files -Dhd.fs=hdfs://192.168.223.170:8020 -Dhd.rm=192.168.223.170:8032 -Dlocalresources.remote=hdfs://192.168.223.170:8020
+		# gradlew -q run-yarn-examples-batch-files -Dhd.fs=hdfs://192.168.223.170:8020 -Dhd.rm=192.168.223.170:8032 -Dlocalresources.remote=hdfs://192.168.223.170:8020
 
 
 # Details
@@ -95,3 +95,12 @@ If we now grep writes to those files it should equal 300000.
 [root@centos2 hadoop]# grep writing hadoop/logs/userlogs/application_1368793613271_0063/container_1368793613271_0063_01_0000*/Container.stdout | wc
   99347  794776 18875931
 ```
+
+This quick command set assumes local hadoop cluster with default settings.
+
+		# gradlew :yarn-examples-common:yarn-examples-batch-files:build -x test
+		# hdfs dfs -rm -R /app /lib
+		# hdfs dfs -mkdir -p /app/batch-files /lib
+		# hdfs dfs -copyFromLocal yarn/batch-files/build/libs/* /app/batch-files
+		# hdfs dfs -copyFromLocal yarn/batch-files/build/dependency-libs/* /lib
+		# gradlew -q run-yarn-examples-batch-files
