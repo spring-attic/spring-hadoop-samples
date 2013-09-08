@@ -6,15 +6,15 @@ jobs utilising Yarn cluster resources by partitioning tasks to run on different 
 
 To test this example:
 
-		./gradlew clean :yarn-examples-common:yarn-examples-batch-partition:build
+		# gradlew clean :yarn-examples-common:yarn-examples-batch-partition:build
 
 To run this example against local Hadoop cluster:
 
-		./gradlew -q run-yarn-examples-batch-partition
+		# gradlew -q run-yarn-examples-batch-partition
 
 To run this example against remote Hadoop cluster:
 
-		./gradlew -q run-yarn-examples-batch-partition -Dhd.fs=hdfs://192.168.223.170:8020 -Dhd.rm=192.168.223.139:8070 -Dlocalresources.remote=hdfs://192.168.223.170:8020
+		# gradlew -q run-yarn-examples-batch-partition -Dhd.fs=hdfs://192.168.223.170:8020 -Dhd.rm=192.168.223.139:8070 -Dlocalresources.remote=hdfs://192.168.223.170:8020
 
 # Details
 
@@ -67,3 +67,14 @@ On its own this example is not very useful but demonstrates the basics of batch 
 User then have a total control what those partitioned steps should actually do. Other batch
 example *batch-files* will then take this concept much further by passing more
 job parameters into containers and do more real life data processing.
+
+# Quick Instructions
+
+This quick command set assumes local hadoop cluster with default settings.
+
+		# gradlew :yarn-examples-common:yarn-examples-batch-partition:build -x test
+		# hdfs dfs -rm -R /app /lib
+		# hdfs dfs -mkdir -p /app/batch-partition /lib
+		# hdfs dfs -copyFromLocal yarn/batch-partition/build/libs/* /app/batch-partition
+		# hdfs dfs -copyFromLocal yarn/batch-partition/build/dependency-libs/* /lib
+		# gradlew -q run-yarn-examples-batch-partition
