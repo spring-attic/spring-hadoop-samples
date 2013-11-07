@@ -40,7 +40,7 @@ import org.springframework.yarn.test.junit.AbstractYarnClusterTests;
 public class KillApplicationTests extends AbstractYarnClusterTests {
 
 	@Test
-	@Timed(millis=300000)
+	@Timed(millis=130000)
 	public void testAppSubmission() throws Exception {
 		ApplicationId applicationId = submitApplication();
 		YarnApplicationState state = waitState(applicationId, 120, TimeUnit.SECONDS, YarnApplicationState.RUNNING);
