@@ -17,6 +17,7 @@ allprojects {
 	//logging.captureStandardOutput LogLevel.DEBUG
  
 	repositories {
+		mavenLocal()
 		maven { url 'http://repo.springsource.org/libs-milestone' }
 		mavenCentral()
 	}
