@@ -57,6 +57,10 @@ public class CustomContainer extends AbstractIntegrationYarnContainer {
 				request.job = job;
 			}
 			JobResponse response = (JobResponse) client.doMindRequest(request);
+			if (response == null) {
+				die = true;
+				break;
+			}
 			log.info("Response state=" + response.getState());
 
 			if (response.getState().equals(JobResponse.State.RUNJOB)) {
