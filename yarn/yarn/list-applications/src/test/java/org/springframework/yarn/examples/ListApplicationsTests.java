@@ -22,7 +22,6 @@ import java.util.List;
 
 import org.apache.hadoop.yarn.api.records.ApplicationReport;
 import org.junit.Test;
-import org.springframework.test.annotation.Timed;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.yarn.test.context.MiniYarnCluster;
 import org.springframework.yarn.test.context.YarnDelegatingSmartContextLoader;
@@ -39,7 +38,6 @@ import org.springframework.yarn.test.junit.AbstractYarnClusterTests;
 public class ListApplicationsTests extends AbstractYarnClusterTests {
 
 	@Test
-	@Timed(millis=70000)
 	public void testClient() throws Exception {
 
 		// just testing that we get no exceptions
