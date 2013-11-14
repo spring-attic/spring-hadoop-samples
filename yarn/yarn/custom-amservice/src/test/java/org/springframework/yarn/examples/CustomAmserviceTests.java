@@ -62,7 +62,7 @@ public class CustomAmserviceTests extends AbstractYarnClusterTests {
 
 		for (Resource res : resources) {
 			File file = res.getFile();
-			if (file.getName().endsWith("stdout")) {
+			if (file.getName().endsWith("stderr")) {
 				String content = "";
 				if (file.length() > 0) {
 					Scanner scanner = new Scanner(file);
