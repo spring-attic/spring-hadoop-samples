@@ -15,11 +15,9 @@
 
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-		<spring.hadoop.version>1.0.1.RC1</spring.hadoop.version>
-		<spring.integration.version>2.1.5.RELEASE</spring.integration.version>
-		<hadoop.version>1.0.4</hadoop.version>
+		<spring.hadoop.version>1.0.2.RELEASE</spring.hadoop.version>
+		<hadoop.version>1.2.1</hadoop.version>
 		<hive.version>0.10.0</hive.version>
-		<thrift.version>0.9.0</thrift.version>
 	</properties>
 
 	<dependencies>
@@ -40,8 +38,8 @@
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-jdbc</artifactId>
 			<version>${spring.version}</version>
-
 		</dependency>
+
 		<dependency>
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-test</artifactId>
@@ -53,13 +51,6 @@
 			<artifactId>spring-tx</artifactId>
 			<version>${spring.version}</version>
 		</dependency>
-
-		<dependency>
-			<groupId>org.springframework.integration</groupId>
-			<artifactId>spring-integration-core</artifactId>
-			<version>${spring.integration.version}</version>
-		</dependency>
-
 
 		<dependency>
 			<groupId>org.apache.hadoop</groupId>
@@ -78,33 +69,6 @@
 			<groupId>org.apache.hive</groupId>
 			<artifactId>hive-service</artifactId>
 			<version>${hive.version}</version>
-		</dependency>
-
-		<!-- force matching versions of jackson libs -->
-		<dependency>
-			<groupId>org.codehaus.jackson</groupId>
-			<artifactId>jackson-core-asl</artifactId>
-			<version>1.8.8</version>
-			<scope>runtime</scope>
-		</dependency>
-		<dependency>
-			<groupId>org.codehaus.jackson</groupId>
-			<artifactId>jackson-mapper-asl</artifactId>
-			<version>1.8.8</version>
-			<scope>runtime</scope>
-		</dependency>
-
-		<!--  thift only needed as compile time to support 'native' implementation of HivePasswordRepository -->
-		<dependency>
-			<groupId>org.apache.thrift</groupId>
-			<artifactId>libthrift</artifactId>
-			<version>${thrift.version}</version>
-		</dependency>
-
-		<dependency>
-			<groupId>org.apache.thrift</groupId>
-			<artifactId>libfb303</artifactId>
-			<version>${thrift.version}</version>
 		</dependency>
 
 		<!-- runtime Hive deps start -->
@@ -162,12 +126,8 @@
 
 	<repositories>
 		<repository>
-			<id>spring-milestone</id>
-			<url>http://repo.springsource.org/libs-milestone</url>
-		</repository>
-		<repository>
-			<id>spring-snapshot</id>
-			<url>http://repo.springsource.org/libs-snapshot</url>
+			<id>spring-release</id>
+			<url>http://repo.spring.io/libs-release</url>
 		</repository>
 	</repositories>
 

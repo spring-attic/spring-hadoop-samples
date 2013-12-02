@@ -25,12 +25,10 @@
 	
 	<hive-template id="hiveTemplate"/>		
  
- 	<!-- 
-	<hive-runner id="hiveRunner" hive-client-ref="hiveClientFactory" run-at-startup="false"
+	<hive-runner id="hiveRunner" hive-client-factory-ref="hiveClientFactory" run-at-startup="false"
 			     pre-action="hdfsScript">
 		<script location="password-analysis.hql"/>
 	</hive-runner>
-	-->
 		
 	<script id="hdfsScript" language="groovy" location="set-hive-permissions.groovy" run-at-startup="true"/>
 	

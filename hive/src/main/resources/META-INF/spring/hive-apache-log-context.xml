@@ -22,11 +22,10 @@
 	<hive-runner id="hiveRunner" run-at-startup="false" >
 		<script location="apache-log-simple.hql">
 				<arguments>
-					hiveContribJar=${app.repo}/hive-contrib-0.9.0.jar
+					hiveContribJar=${app.repo}/hive-contrib-0.10.0.jar
 					localInPath="${app.home}/data/apache.log"
 				</arguments>
 		</script>			
 	</hive-runner>
 
-	
 </beans:beans>

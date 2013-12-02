@@ -31,7 +31,6 @@ public class HiveAppWithApacheLogs {
 		log.info("Hive Application Running");
 		context.registerShutdownHook();	
 		
-		
 		HiveRunner runner = context.getBean(HiveRunner.class);		
 		runner.call();
 
