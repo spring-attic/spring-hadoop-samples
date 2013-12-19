@@ -24,6 +24,7 @@ import java.util.Map.Entry;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.apache.hadoop.yarn.api.records.Container;
 import org.apache.hadoop.yarn.api.records.ContainerLaunchContext;
 import org.apache.hadoop.yarn.api.records.ContainerStatus;
 import org.springframework.yarn.YarnSystemConstants;
@@ -72,7 +73,7 @@ public class CustomAppmaster extends StaticEventingAppmaster implements Containe
 	}
 
 	@Override
-	public ContainerLaunchContext preLaunch(ContainerLaunchContext context) {
+	public ContainerLaunchContext preLaunch(Container container, ContainerLaunchContext context) {
 		AppmasterService service = getAppmasterService();
 		if (service != null) {
 			int port = service.getPort();

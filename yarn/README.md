@@ -1,13 +1,11 @@
 Spring Yarn Examples
 ====================
 
-NOTE: These samples are currently configured to use Spring Hadoop 2.0.0.M1
+NOTE: These samples are currently configured to use Spring Hadoop 2.0.0.M4
 release. You will get Hadoop dependencies through different maven artifacts
-for Spring Hadoop. Currently vanilla Hadoop 2.0.6-alpha and Pivotal HD 1.0
-are supported. Samples default to vanilla Hadoop.
+for Spring Hadoop. Currently vanilla Hadoop 2.2.0-alpha is supported.
 ```
 # gradlew -Pdistro=hadoop20 clean build -x test
-# gradlew -Pdistro=phd1 clean build -x test
 ```
 
 This project provides a number of examples to get you started using Spring Yarn and Spring Hadoop. These examples are designed to work with [Spring Hadoop] (http://www.springsource.org/spring-hadoop) 2.0 or higher and are organized into the following sub projects:
@@ -69,8 +67,8 @@ Every example jar file  has its own directory location in HDFS.
 /lib/spring-context-3.1.3.RELEASE.jar
 /lib/spring-context-support-3.1.3.RELEASE.jar
 /lib/spring-core-3.1.3.RELEASE.jar
-/lib/spring-data-hadoop-2.0.0.M1-hadoop20.jar
-/lib/spring-data-hadoop-core-2.0.0.M1-hadoop20.jar
+/lib/spring-data-hadoop-2.0.0.M4-hadoop22.jar
+/lib/spring-data-hadoop-core-2.0.0.M4-hadoop22.jar
 /lib/spring-expression-3.1.3.RELEASE.jar
 /lib/spring-integration-core-2.2.3.RELEASE.jar
 /lib/spring-integration-ip-2.2.3.RELEASE.jar
@@ -78,9 +76,9 @@ Every example jar file  has its own directory location in HDFS.
 /lib/spring-jdbc-3.1.3.RELEASE.jar
 /lib/spring-retry-1.0.2.RELEASE.jar
 /lib/spring-tx-3.1.3.RELEASE.jar
-/lib/spring-yarn-batch-2.0.0.M1-hadoop20.jar
-/lib/spring-yarn-core-2.0.0.M1-hadoop20.jar
-/lib/spring-yarn-integration-2.0.0.M1-hadoop20.jar
+/lib/spring-yarn-batch-2.0.0.M4-hadoop22.jar
+/lib/spring-yarn-core-2.0.0.M4-hadoop22.jar
+/lib/spring-yarn-integration-2.0.0.M4-hadoop22.jar
 /lib/yarn-examples-common-2.0.0.BUILD-SNAPSHOT.jar
 
 [root@centos hadoop]# hadoop/bin/hdfs dfs -ls /app/simple-command

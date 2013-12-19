@@ -10,11 +10,7 @@
 
 	<context:property-placeholder location="hadoop.properties"/>
 
-	<yarn:configuration>
-		fs.defaultFS=${SHDP_HD_FS}
-		yarn.resourcemanager.address=${SHDP_HD_RM}
-		yarn.resourcemanager.scheduler.address=${SHDP_HD_SCHEDULER}
-	</yarn:configuration>
+	<yarn:configuration fs-uri="${SHDP_HD_FS}" rm-address="${SHDP_HD_RM}" scheduler-address="${SHDP_HD_SCHEDULER}"/>
 
 	<yarn:localresources>
 		<yarn:hdfs path="/app/multi-context/*.jar"/>

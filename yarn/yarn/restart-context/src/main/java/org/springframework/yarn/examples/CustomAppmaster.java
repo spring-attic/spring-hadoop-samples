@@ -22,6 +22,7 @@ import java.util.concurrent.ConcurrentLinkedQueue;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.apache.hadoop.yarn.api.records.Container;
 import org.apache.hadoop.yarn.api.records.ContainerId;
 import org.apache.hadoop.yarn.api.records.ContainerLaunchContext;
 import org.apache.hadoop.yarn.api.records.ContainerStatus;
@@ -55,8 +56,8 @@ public class CustomAppmaster extends StaticEventingAppmaster implements Containe
 	}
 
 	@Override
-	public ContainerLaunchContext preLaunch(ContainerLaunchContext context) {
-		ContainerId containerId = context.getContainerId();
+	public ContainerLaunchContext preLaunch(Container container, ContainerLaunchContext context) {
+		ContainerId containerId = container.getId();
 		Integer attempt = 1;
 		ContainerId failedContainerId = failed.poll();
 		Object assignedData = (failedContainerId != null ? getContainerAssign().getAssignedData(failedContainerId) : null);

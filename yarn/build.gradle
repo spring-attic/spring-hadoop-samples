@@ -5,7 +5,7 @@ apply plugin: 'base'
 
 buildscript {
 	repositories {
-		maven { url "http://repo.springsource.org/plugins-release" }
+		maven { url "http://repo.spring.io/plugins-release" }
 	}
 	dependencies {
 		classpath("org.springframework.build.gradle:docbook-reference-plugin:0.2.6")
@@ -17,38 +17,34 @@ allprojects {
 	//logging.captureStandardOutput LogLevel.DEBUG
  
 	repositories {
-		maven { url 'http://repo.springsource.org/libs-milestone' }
 		mavenCentral()
+		maven { url 'http://repo.spring.io/libs-milestone' }
 	}
 }
 
-def hadoopDefault = "hadoop20"
+def hadoopDefault = "hadoop22"
 def hadoopDistro = project.hasProperty("distro") ? project.getProperty("distro") : hadoopDefault
-def springDataVersion = hadoop20SpringDataVersion
+def springDataVersion = hadoop22SpringDataVersion
 
 switch (hadoopDistro) {
 
-	// vanilla hadoop 2.0.x
-	case "hadoop20":
-		springDataVersion = hadoop20SpringDataVersion
-		println "Using Apache Hadoop 2.0.x Spring Hadoop Dependencies - [$springDataVersion]"
+	// vanilla hadoop 2.2.x
+	case "hadoop22":
+		springDataVersion = hadoop22SpringDataVersion
+		println "Using Apache Hadoop 2.2.x Spring Hadoop Dependencies - [$springDataVersion]"
 	break;
 
 	// pivotal
-	case "phd1":
-		springDataVersion = phd1SpringDataVersion
-		println "Using Pivotal HD 1.0 Spring Hadoop Dependencies - [$springDataVersion]"
-	break;
 
 	default:
 		if (!project.hasProperty("distro")) {
 			println "Using default distro: Apache Hadoop Spring Hadoop Dependencies - [$springDataVersion]"
 		} else {
 			if (hadoopDistro == hadoopDefault) {
-				println "Using Apache Hadoop 2.0.x Spring Hadoop Dependencies - [$springDataVersion]"
+				println "Using Apache Hadoop 2.2.x Spring Hadoop Dependencies - [$springDataVersion]"
 			} else {
 				println "Failing build: $hadoopDistro is not a supported distro"
-				println "Supported distros: hadoop20 and phd1"
+				println "Supported distros: hadoop22"
 				println "* default"
 				throw new InvalidUserDataException("$hadoopDistro is not a supported distro")
 			}
