@@ -9,6 +9,16 @@ Use the following commands to build and run the sample
     $ mvn clean package
     $ sh ./target/appassembler/bin/wordcount
 
+The default is to build and run against Hadoop 1.2.1. To support other versions there are currently two profiles provided:
+
+- Hadoop 2.2.0 
+
+    $ mvn clean package -Phadoop22
+
+- Pivotal HD 1.1
+
+    $ mvn clean package -Pphd1
+
 === Sample highlights
 
 The file +src/main/resources/META-INF/spring/application-context.xml+ is the main configuration file for the sample.  It uses the Spring Hadoop XML namespace.
