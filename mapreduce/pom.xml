@@ -66,6 +66,9 @@
 								<phase>package</phase>
 								<configuration>
 									<tasks>
+										<copy todir="target/appassembler/data">
+											<fileset dir="data"/>
+										</copy>
 										<copy todir="target/appassembler/etc">
 											<fileset dir="etc/phd1"/>
 										</copy>
