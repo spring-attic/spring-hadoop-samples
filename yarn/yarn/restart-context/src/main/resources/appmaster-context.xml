@@ -27,7 +27,7 @@
 		<yarn:classpath/>
 	</yarn:environment>
 
-	<yarn:master class="org.springframework.yarn.examples.CustomAppmaster">
+	<yarn:master appmaster-class="org.springframework.yarn.examples.CustomAppmaster">
 		<yarn:container-runner/>
 	</yarn:master>
 

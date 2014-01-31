@@ -31,13 +31,12 @@
 
 	<bean id="transactionManager" class="org.springframework.batch.support.transaction.ResourcelessTransactionManager"/>
 
-	<bean id="jobRepository" class="org.springframework.yarn.batch.repository.RemoteJobRepositoryFactoryBean">
-		<property name="transactionManager" ref="transactionManager"/>
+	<bean id="jobRepository" class="org.springframework.yarn.batch.repository.RemoteJobRepository">
 		<property name="appmasterScOperations" ref="yarnAmserviceClient"/>
 	</bean>
 
-	<bean id="jobExplorer" class="org.springframework.yarn.batch.repository.RemoteJobExplorerFactoryBean">
-		<property name="repositoryFactory" ref="&amp;jobRepository" />
+	<bean id="jobExplorer" class="org.springframework.yarn.batch.repository.RemoteJobExplorer">
+		<property name="appmasterScOperations" ref="yarnAmserviceClient"/>
 	</bean>
 
 	<bean id="itemReader" class="org.springframework.yarn.batch.item.HdfsFileSplitItemReader" scope="step">
@@ -70,7 +69,13 @@
 	<yarn-int:converter>
 		<bean class="org.springframework.yarn.integration.convert.MindHolderToObjectConverter">
 			<constructor-arg ref="mapper"/>
-			<constructor-arg value="org.springframework.yarn.batch.repository.bindings"/>
+			<constructor-arg>
+				<array>
+					<value>org.springframework.yarn.batch.repository.bindings</value>
+					<value>org.springframework.yarn.batch.repository.bindings.exp</value>
+					<value>org.springframework.yarn.batch.repository.bindings.repo</value>
+				</array>
+			</constructor-arg>
 		</bean>
 	</yarn-int:converter>
 
