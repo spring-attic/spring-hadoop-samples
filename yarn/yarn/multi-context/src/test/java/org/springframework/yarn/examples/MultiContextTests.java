@@ -21,18 +21,12 @@ import static org.hamcrest.CoreMatchers.notNullValue;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.greaterThan;
 import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertTrue;
 
 import java.io.File;
 import java.util.List;
-import java.util.Map;
-import java.util.Map.Entry;
 import java.util.Scanner;
-import java.util.Set;
 
-import org.apache.hadoop.conf.Configuration;
 import org.apache.hadoop.yarn.api.records.YarnApplicationState;
-import org.apache.hadoop.yarn.conf.YarnConfiguration;
 import org.junit.Test;
 import org.springframework.core.io.Resource;
 import org.springframework.test.annotation.Timed;
@@ -54,23 +48,9 @@ public abstract class MultiContextTests extends AbstractYarnClusterTests {
 	@Test
 	@Timed(millis=120000)
 	public void testAppSubmission() throws Exception {
-
-		Map<String, Configuration> beans1 = getApplicationContext().getBeansOfType(Configuration.class);
-
-		Set<Entry<String, Configuration>> entrySet = beans1.entrySet();
-
-		for (Entry<String, Configuration> e : beans1.entrySet()) {
-			String fsuri1 = e.getValue().get("fs.defaultFS");
-			String fsuri2 = e.getValue().get("fs.default.name");
-			String name = e.getKey();
-
-		}
-
-//		Map<String, YarnConfiguration> beans2 = getApplicationContext().getBeansOfType(YarnConfiguration.class);
-
 		ApplicationInfo info = submitApplicationAndWait();
 		assertNotNull(info.getYarnApplicationState());
-		assertTrue(info.getYarnApplicationState().equals(YarnApplicationState.FINISHED));
+		assertThat(info.getYarnApplicationState(), is(YarnApplicationState.FINISHED));
 
 		List<Resource> resources = ContainerLogUtils.queryContainerLogs(getYarnCluster(), info.getApplicationId());
 

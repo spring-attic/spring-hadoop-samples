@@ -43,9 +43,8 @@ public class MultiContextJavaConfigTests extends MultiContextTests {
 	@Autowired
 	@Qualifier("miniYarnConfig")
 	public void setConfiguration(org.apache.hadoop.conf.Configuration configuration) {
-		String fsuri1 = configuration.get("fs.defaultFS");
-		String fsuri2 = configuration.get("fs.default.name");
-		String rm = configuration.get("yarn.resourcemanager.address");
+		// for now we need to override super method for
+		// it not to fail due to two config objects in context
 		super.setConfiguration(configuration);
 	}
 
