@@ -20,6 +20,7 @@ import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.CoreMatchers.notNullValue;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.greaterThan;
+import static org.junit.Assert.assertNotNull;
 
 import java.io.File;
 import java.util.List;
@@ -29,14 +30,12 @@ import org.apache.hadoop.yarn.api.records.YarnApplicationState;
 import org.junit.Test;
 import org.springframework.core.io.Resource;
 import org.springframework.test.annotation.Timed;
-import org.springframework.test.context.ContextConfiguration;
-import org.springframework.yarn.test.context.MiniYarnCluster;
-import org.springframework.yarn.test.context.YarnDelegatingSmartContextLoader;
 import org.springframework.yarn.test.junit.AbstractYarnClusterTests;
 import org.springframework.yarn.test.junit.ApplicationInfo;
 import org.springframework.yarn.test.support.ContainerLogUtils;
 
 /**
+ * Base test for multi context example.
  * Tests for multi context example. We're checking that
  * application status is ok and log files looks
  * what is expected.
@@ -44,17 +43,13 @@ import org.springframework.yarn.test.support.ContainerLogUtils;
  * @author Janne Valkealahti
  *
  */
-@ContextConfiguration(loader=YarnDelegatingSmartContextLoader.class)
-@MiniYarnCluster
-public class MultiContextTests extends AbstractYarnClusterTests {
+public abstract class MultiContextTests extends AbstractYarnClusterTests {
 
 	@Test
-	@Timed(millis=70000)
+	@Timed(millis=120000)
 	public void testAppSubmission() throws Exception {
 		ApplicationInfo info = submitApplicationAndWait();
-		assertThat(info, notNullValue());
-		assertThat(info.getYarnApplicationState(), notNullValue());
-		assertThat(info.getApplicationId(), notNullValue());
+		assertNotNull(info.getYarnApplicationState());
 		assertThat(info.getYarnApplicationState(), is(YarnApplicationState.FINISHED));
 
 		List<Resource> resources = ContainerLogUtils.queryContainerLogs(getYarnCluster(), info.getApplicationId());
@@ -77,14 +72,8 @@ public class MultiContextTests extends AbstractYarnClusterTests {
 					assertThat(content, containsString("Hello from MultiContextContainer"));
 				}
 			} else if (file.getName().endsWith("stderr")) {
-				String content = "";
-				if (file.length() > 0) {
-					Scanner scanner = new Scanner(file);
-					content = scanner.useDelimiter("\\A").next();
-					scanner.close();
-				}
 				// can't have anything in stderr files
-				assertThat("stderr file is not empty: " + content, file.length(), is(0l));
+				assertThat(file.length(), is(0l));
 			}
 		}
 	}

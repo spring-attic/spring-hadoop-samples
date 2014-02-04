@@ -43,13 +43,15 @@
 
 	<!-- appmaster service client -->
 
-	<bean id="jobRepositoryRemoteService" class="org.springframework.yarn.batch.repository.JobRepositoryRemoteService" >
-		<property name="mapJobRepositoryFactoryBean" ref="&amp;jobRepository"/>
+	<bean id="jobRepositoryRemoteService" class="org.springframework.yarn.batch.repository.JobRepositoryService" >
+		<property name="jobRepository" ref="jobRepository"/>
+		<property name="jobExplorer" ref="jobExplorer"/>
 	</bean>
 
 	<bean id="batchService" class="org.springframework.yarn.batch.repository.BatchAppmasterService" >
 		<property name="jobRepositoryRemoteService" ref="jobRepositoryRemoteService"/>
 	</bean>
+
 
 	<bean id="mapper" class="org.springframework.yarn.integration.support.Jackson2ObjectMapperFactoryBean" />
 
@@ -62,7 +64,13 @@
 	<yarn-int:converter>
 		<bean class="org.springframework.yarn.integration.convert.MindHolderToObjectConverter">
 			<constructor-arg ref="mapper"/>
-			<constructor-arg value="org.springframework.yarn.batch.repository.bindings"/>
+			<constructor-arg>
+				<array>
+					<value>org.springframework.yarn.batch.repository.bindings</value>
+					<value>org.springframework.yarn.batch.repository.bindings.exp</value>
+					<value>org.springframework.yarn.batch.repository.bindings.repo</value>
+				</array>
+			</constructor-arg>
 		</bean>
 	</yarn-int:converter>
 
@@ -81,6 +89,10 @@
 
 	<bean id="jobRepository" class="org.springframework.batch.core.repository.support.MapJobRepositoryFactoryBean">
 		<property name="transactionManager" ref="transactionManager"/>
+	</bean>
+
+	<bean id="jobExplorer" class="org.springframework.batch.core.explore.support.MapJobExplorerFactoryBean">
+		<property name="repositoryFactory" ref="&amp;jobRepository"/>
 	</bean>
 
 	<batch:job id="job">
