@@ -1,0 +1,72 @@
+buildscript {
+    repositories {
+        maven { url "http://repo.spring.io/libs-milestone" }
+    }
+    dependencies {
+        classpath("org.springframework.boot:spring-boot-gradle-plugin:1.0.0.RC1")
+    }
+}
+
+version =  '0.1.0'
+
+apply plugin: 'java'
+apply plugin: 'eclipse'
+apply plugin: 'idea'
+apply plugin: 'spring-boot'
+
+repositories {
+    mavenCentral()
+    maven { url "http://repo.spring.io/libs-milestone" }
+}
+
+dependencies {
+    compile("org.springframework.data:spring-yarn-boot:2.0.0.M5")
+}
+
+task clientJar(type: Jar) {
+    appendix = 'client'
+    baseName = 'yarn-boot-simple'
+    from sourceSets.main.output
+    exclude('**/appmaster/*')
+    exclude('**/container/*')
+}
+
+task appmasterJar(type: Jar) {
+    appendix = 'appmaster'
+    baseName = 'yarn-boot-simple'
+    from sourceSets.main.output
+    exclude('**/client/*')
+    exclude('**/container/*')
+}
+
+task containerJar(type: Jar) {
+    appendix = 'container'
+    baseName = 'yarn-boot-simple'
+    from sourceSets.main.output
+    exclude('**/appmaster/*')
+    exclude('**/client/*')
+}
+
+task clientBoot(type: BootRepackage, dependsOn: clientJar) {
+    withJarTask = clientJar
+}
+
+task appmasterBoot(type: BootRepackage, dependsOn: appmasterJar) {
+    withJarTask = appmasterJar
+}
+
+task containerBoot(type: BootRepackage, dependsOn: containerJar) {
+    withJarTask = containerJar
+}
+
+jar.enabled = false
+bootRepackage.enabled = false
+
+task bootJars
+bootJars.dependsOn = [clientBoot,containerBoot,appmasterBoot]
+
+build.dependsOn(bootJars)
+
+task wrapper(type: Wrapper) {
+    gradleVersion = '1.8'
+}
