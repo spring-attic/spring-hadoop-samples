@@ -23,7 +23,7 @@
 		<script location="apache-log-simple.hql">
 				<arguments>
 					hiveContribJar=${app.repo}/hive-contrib-0.10.0.jar
-					localInPath="${app.home}/data/apache.log"
+					localInPath="${basedir}/data/apache.log"
 				</arguments>
 		</script>			
 	</hive-runner>

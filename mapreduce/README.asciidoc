@@ -52,7 +52,7 @@ HDFS scripting is performed using the XML namespace +<script/>+ element.
 ==== Declaring a parameterized HDFS script
 ----
 <script id="setupScript" location="copy-files.groovy">
-  <property name="localSourceFile" value="${app.home}/${localSourceFile}"/>
+  <property name="localSourceFile" value="${basedir}/${localSourceFile}"/>
   <property name="inputDir" value="${wordcount.input.path}"/>
   <property name="outputDir" value="${wordcount.output.path}"/>
 </script>	 
