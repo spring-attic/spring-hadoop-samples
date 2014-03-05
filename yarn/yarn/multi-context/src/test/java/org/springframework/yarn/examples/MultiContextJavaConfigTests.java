@@ -70,7 +70,7 @@ public class MultiContextJavaConfigTests extends MultiContextTests {
 				.includeSystemEnv(false)
 				.withClasspath()
 					.entry("./*")
-					.defaultYarnAppClasspath(true);
+					.useDefaultYarnClasspath(true);
 		}
 
 		@Override

@@ -57,7 +57,7 @@ public class AppmasterConfiguration extends SpringYarnConfigurerAdapter {
 			.includeSystemEnv(true)
 			.withClasspath()
 				.entry("./*")
-				.defaultYarnAppClasspath(true);
+				.useDefaultYarnClasspath(true);
 	}
 
 	@Override
