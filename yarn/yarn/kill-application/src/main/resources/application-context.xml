@@ -27,7 +27,7 @@
 	from windows to appmaster running on linux.
 	-->
 	<yarn:environment include-system-env="false">
-		<yarn:classpath default-yarn-app-classpath="true" delimiter=":">
+		<yarn:classpath use-default-yarn-classpath="true" delimiter=":">
 			./*
 		</yarn:classpath>
 	</yarn:environment>

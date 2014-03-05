@@ -68,7 +68,7 @@ public class CustomAppmaster extends StaticEventingAppmaster implements Containe
 		getContainerAssign().assign(containerId, attempt);
 
 		Map<String, String> env = new HashMap<String, String>(context.getEnvironment());
-		env.put("customappmaster.attempt", attempt.toString());
+		env.put("customappmaster_attempt", attempt.toString());
 		context.setEnvironment(env);
 		return context;
 	}
@@ -76,7 +76,8 @@ public class CustomAppmaster extends StaticEventingAppmaster implements Containe
 	@Override
 	protected boolean onContainerFailed(ContainerStatus status) {
 		ContainerId containerId = status.getContainerId();
-		log.debug("onContainerFailed: " + containerId);
+		log.debug("onContainerFailed status: " + status);
+		log.debug("onContainerFailed containerId: " + containerId);
 
 		if (status.getExitStatus() > 0) {
 			failed.add(containerId);
