@@ -83,17 +83,20 @@
 
 	<!-- batch config -->
 
-	<bean id="partitionHandler" class="org.springframework.yarn.batch.partition.HdfsSplitBatchPartitionHandler">
+	<bean id="partitionHandler" class="org.springframework.yarn.batch.partition.SplitterPartitionHandler">
 		<constructor-arg index="0"><ref bean="yarnAppmaster"/></constructor-arg>
-		<constructor-arg index="1"><ref bean="yarnConfiguration"/></constructor-arg>
 		<property name="stepName" value="remoteStep"/>
 	</bean>
 
-	<bean id="partitioner" class="org.springframework.yarn.batch.partition.MultiHdfsResourcePartitioner" scope="step">
-		<property name="resources" value="#{jobParameters['input']}"/>
+	<bean id="splitter" class="org.springframework.data.hadoop.store.split.StaticLengthSplitter">
+		<constructor-arg index="0"><ref bean="yarnConfiguration"/></constructor-arg>
+		<constructor-arg index="1" value="1000"/>
+	</bean>
+
+	<bean id="partitioner" class="org.springframework.yarn.batch.partition.SplitterPartitioner" scope="step">
+		<property name="inputPatterns" value="#{jobParameters['input']}"/>
 		<property name="configuration" ref="yarnConfiguration"/>
-		<property name="splitSize" value="2"/>
-		<property name="forceSplit" value="true"/>
+		<property name="splitter" ref="splitter"/>
 	</bean>
 
 	<bean id="transactionManager" class="org.springframework.batch.support.transaction.ResourcelessTransactionManager"/>

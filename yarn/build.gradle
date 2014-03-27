@@ -105,8 +105,6 @@ configure(yarnExampleProjectsWithCommon()) {
 		hadoopruntime.exclude group: 'com.thoughtworks.xstream'
 	}
 	dependencies {
-		compile "org.springframework.batch:spring-batch-core:$springBatchVersion"
-		compile "org.springframework.batch:spring-batch-infrastructure:$springBatchVersion"
 		compile "org.springframework.data:spring-yarn-batch:$springDataVersion"
 		runtime "org.springframework.data:spring-data-hadoop:$springDataVersion"
 		runtime "org.springframework.data:spring-data-hadoop-core:$springDataVersion"

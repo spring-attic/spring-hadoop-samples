@@ -16,7 +16,7 @@
 		<yarn:hdfs path="/lib/*.jar"/>
 	</yarn:localresources>
 
-	<yarn:environment include-system-env="false">
+	<yarn:environment>
 		<yarn:classpath/>
 	</yarn:environment>
 

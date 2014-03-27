@@ -26,7 +26,7 @@
 	yarn container execution will fail in 2.0.3 if environment variables are sent
 	from windows to appmaster running on linux.
 	-->
-	<yarn:environment include-system-env="false">
+	<yarn:environment>
 		<yarn:classpath/>
 		jobName=${jobName}
 	</yarn:environment>

@@ -16,7 +16,7 @@
 		fs.hdfs.impl=org.apache.hadoop.hdfs.DistributedFileSystem
 	</yarn:configuration>
 
-	<yarn:localresources local="${hd.fs}" remote="${hd.fs}">
+	<yarn:localresources>
 		<yarn:hdfs path="/app/batch-partition/*.jar"/>
 		<yarn:hdfs path="/lib/*"/>
 	</yarn:localresources>
@@ -25,7 +25,7 @@
 	yarn container execution will fail in 2.0.3 if environment variables are sent
 	from windows to appmaster running on linux.
 	-->
-	<yarn:environment include-system-env="false">
+	<yarn:environment>
 		<yarn:classpath/>
 	</yarn:environment>
 

@@ -39,10 +39,26 @@
 		<property name="appmasterScOperations" ref="yarnAmserviceClient"/>
 	</bean>
 
-	<bean id="itemReader" class="org.springframework.yarn.batch.item.HdfsFileSplitItemReader" scope="step">
-		<property name="resource" value="#{stepExecutionContext['fileName']}"/>
-		<property name="splitStart" value="#{stepExecutionContext['splitStart']}"/>
-		<property name="splitLength" value="#{stepExecutionContext['splitLength']}"/>
+	<bean id="itemReader" class="org.springframework.yarn.batch.item.DataStoreItemReader" scope="step">
+		<property name="dataStoreReader">
+			<bean class="org.springframework.data.hadoop.store.input.TextFileReader">
+				<constructor-arg index="0"><ref bean="yarnConfiguration"/></constructor-arg>
+				<constructor-arg index="1">
+					<bean class="org.apache.hadoop.fs.Path">
+						<constructor-arg value="#{stepExecutionContext['fileName']}"/>
+					</bean>
+				</constructor-arg>
+				<constructor-arg index="2"><null/></constructor-arg>
+				<constructor-arg index="3">
+					<bean class="org.springframework.data.hadoop.store.split.GenericSplit">
+						<constructor-arg index="0" value="#{stepExecutionContext['splitStart']}"/>
+						<constructor-arg index="1" value="#{stepExecutionContext['splitLength']}"/>
+						<constructor-arg index="2"><null/></constructor-arg>
+					</bean>
+				</constructor-arg>
+				<constructor-arg index="4"><null/></constructor-arg>
+			</bean>
+		</property>
 		<property name="lineDataMapper">
 			<bean class="org.springframework.yarn.batch.item.PassThroughLineDataMapper"/>
 		</property>
@@ -56,7 +72,7 @@
 		</batch:tasklet>
 	</batch:step>
 
-	<bean id="stepLocator" class="org.springframework.yarn.batch.partition.BeanFactoryStepLocator"/>
+	<bean id="stepLocator" class="org.springframework.yarn.batch.support.BeanFactoryStepLocator"/>
 
 	<bean id="mapper" class="org.springframework.yarn.integration.support.Jackson2ObjectMapperFactoryBean" />
 

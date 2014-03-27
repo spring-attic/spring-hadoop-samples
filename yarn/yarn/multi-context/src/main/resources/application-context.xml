@@ -16,12 +16,12 @@
 		yarn.resourcemanager.address=${hd.rm}
 	</yarn:configuration>
 
-	<yarn:localresources local="${hd.fs}" remote="${hd.fs}">
+	<yarn:localresources>
 		<yarn:hdfs path="/app/multi-context/*.jar"/>
 		<yarn:hdfs path="/lib/*.jar"/>
 	</yarn:localresources>
 
-	<yarn:environment include-system-env="false">
+	<yarn:environment>
 		<yarn:classpath/>
 	</yarn:environment>
 
