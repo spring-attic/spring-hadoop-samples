@@ -78,7 +78,7 @@
 
 	<!-- batch config -->
 
-	<bean id="partitionHandler" class="org.springframework.yarn.batch.partition.StaticBatchPartitionHandler">
+	<bean id="partitionHandler" class="org.springframework.yarn.batch.partition.StaticPartitionHandler">
 		<constructor-arg ref="yarnAppmaster"/>
 		<property name="gridSize" value="2"/>
 	</bean>

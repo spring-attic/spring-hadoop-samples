@@ -54,7 +54,7 @@ public class AppmasterConfiguration extends SpringYarnConfigurerAdapter {
 	@Override
 	public void configure(YarnEnvironmentConfigurer environment) throws Exception {
 		environment
-			.includeSystemEnv(true)
+			.includeLocalSystemEnv(false)
 			.withClasspath()
 				.entry("./*")
 				.useDefaultYarnClasspath(true);

@@ -67,7 +67,7 @@ public class MultiContextJavaConfigTests extends MultiContextTests {
 		@Override
 		public void configure(YarnEnvironmentConfigurer environment) throws Exception {
 			environment
-				.includeSystemEnv(false)
+				.includeLocalSystemEnv(false)
 				.withClasspath()
 					.entry("./*")
 					.useDefaultYarnClasspath(true);

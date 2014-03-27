@@ -35,7 +35,7 @@
 		<batch:tasklet transaction-manager="transactionManager" start-limit="100" ref="hello"/>
 	</batch:step>
 
-	<bean id="stepLocator" class="org.springframework.yarn.batch.partition.BeanFactoryStepLocator"/>
+	<bean id="stepLocator" class="org.springframework.yarn.batch.support.BeanFactoryStepLocator"/>
 
 	<bean id="mapper" class="org.springframework.yarn.integration.support.Jackson2ObjectMapperFactoryBean" />
 
