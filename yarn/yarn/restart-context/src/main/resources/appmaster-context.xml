@@ -24,7 +24,7 @@
 	</yarn:localresources>
 
 	<yarn:environment>
-		<yarn:classpath/>
+		<yarn:classpath use-yarn-app-classpath="true"/>
 	</yarn:environment>
 
 	<yarn:master appmaster-class="org.springframework.yarn.examples.CustomAppmaster">

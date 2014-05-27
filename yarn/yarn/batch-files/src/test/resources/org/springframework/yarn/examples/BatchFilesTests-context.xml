@@ -23,7 +23,7 @@
 	from windows to appmaster running on linux.
 	-->
 	<yarn:environment>
-		<yarn:classpath/>
+		<yarn:classpath use-yarn-app-classpath="true"/>
 	</yarn:environment>
 
 	<util:properties id="customJobParameters">

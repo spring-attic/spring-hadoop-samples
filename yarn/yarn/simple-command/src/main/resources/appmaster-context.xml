@@ -25,7 +25,7 @@
 	</yarn:localresources>
 
 	<yarn:environment>
-		<yarn:classpath use-default-yarn-classpath="true" delimiter=":">
+		<yarn:classpath use-yarn-app-classpath="true" delimiter=":">
 			./*
 		</yarn:classpath>
 	</yarn:environment>

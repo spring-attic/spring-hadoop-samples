@@ -34,10 +34,10 @@
 	</yarn:localresources>
 
 	<yarn:environment>
-		<yarn:classpath/>
+		<yarn:classpath use-yarn-app-classpath="true"/>
 	</yarn:environment>
 
-	<yarn-batch:master>
+	<yarn-batch:master jobs="job">
 		<yarn-batch:container-runner/>
 	</yarn-batch:master>
 

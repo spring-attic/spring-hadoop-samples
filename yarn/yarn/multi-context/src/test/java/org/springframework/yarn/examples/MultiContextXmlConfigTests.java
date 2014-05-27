@@ -16,7 +16,6 @@
 package org.springframework.yarn.examples;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.yarn.test.context.MiniYarnCluster;
 import org.springframework.yarn.test.context.YarnDelegatingSmartContextLoader;
@@ -32,11 +31,7 @@ import org.springframework.yarn.test.context.YarnDelegatingSmartContextLoader;
 public class MultiContextXmlConfigTests extends MultiContextTests {
 
 	@Autowired
-//	@Qualifier("miniYarnConfig")
 	public void setConfiguration(org.apache.hadoop.conf.Configuration configuration) {
-		String fsuri1 = configuration.get("fs.defaultFS");
-		String fsuri2 = configuration.get("fs.default.name");
-
 		super.setConfiguration(configuration);
 	}
 

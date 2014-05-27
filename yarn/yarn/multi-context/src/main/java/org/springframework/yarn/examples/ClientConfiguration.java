@@ -57,7 +57,7 @@ public class ClientConfiguration extends SpringYarnConfigurerAdapter {
 		environment
 			.withClasspath()
 				.entry("./*")
-				.useDefaultYarnClasspath(true);
+				.useYarnAppClasspath(true);
 	}
 
 	@Override

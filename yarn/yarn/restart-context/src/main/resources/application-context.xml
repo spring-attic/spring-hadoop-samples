@@ -20,12 +20,8 @@
 		<yarn:hdfs path="/lib/*"/>
 	</yarn:localresources>
 
-	<!--
-	yarn container execution will fail in 2.0.3 if environment variables are sent
-	from windows to appmaster running on linux.
-	-->
 	<yarn:environment>
-		<yarn:classpath/>
+		<yarn:classpath use-yarn-app-classpath="true"/>
 	</yarn:environment>
 
 	<yarn:client app-name="restart-context">

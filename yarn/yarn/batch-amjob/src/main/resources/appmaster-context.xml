@@ -67,6 +67,6 @@
 		<property name="jobRepository" ref="jobRepository"/>
 	</bean>
 
-	<yarn-batch:master job-name="${jobName}"/>
+	<yarn-batch:master job-name="${jobName}" jobs="job1,job2"/>
 
 </beans>

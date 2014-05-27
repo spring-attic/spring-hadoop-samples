@@ -17,7 +17,7 @@
 	</yarn:localresources>
 
 	<yarn:environment>
-		<yarn:classpath/>
+		<yarn:classpath use-yarn-app-classpath="true"/>
 	</yarn:environment>
 
 	<util:properties id="arguments">

@@ -22,12 +22,8 @@
 		<yarn:hdfs path="/lib/*"/>
 	</yarn:localresources>
 
-	<!--
-	yarn container execution will fail in 2.0.3 if environment variables are sent
-	from windows to appmaster running on linux.
-	-->
 	<yarn:environment>
-		<yarn:classpath use-default-yarn-classpath="true" delimiter=":">
+		<yarn:classpath use-yarn-app-classpath="true" delimiter=":">
 			./*
 		</yarn:classpath>
 	</yarn:environment>
