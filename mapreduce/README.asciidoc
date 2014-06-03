@@ -19,18 +19,6 @@ The default is to build and run against Hadoop 1.2.1. To support other versions 
 
     $ mvn clean package -Pphd1
 
-- Pivotal HD 2.0
-
-    $ mvn clean package -Pphd20
-
-- Hortonworks HDP 2.1
-
-    $ mvn clean package -Phdp21
-
-- Cloudera CDH5
-
-    $ mvn clean package -Pcdh5
-
 === Sample highlights
 
 The file +src/main/resources/META-INF/spring/application-context.xml+ is the main configuration file for the sample.  It uses the Spring Hadoop XML namespace.

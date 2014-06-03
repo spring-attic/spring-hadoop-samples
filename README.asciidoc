@@ -1,4 +1,4 @@
-== Sample Applications for Spring for Apache Hadoop
+== Sample Applications for Spring for Apache Hadoop version 1.x
 
 This repository contains several sample applications that show how you can use
 Spring for Apache Hadoop.
