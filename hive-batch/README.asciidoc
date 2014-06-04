@@ -20,5 +20,19 @@ Use the following commands to build and run the sample
     $ mvn clean package
     $ sh ./target/appassembler/bin/hiveBatchApp
 
+You should see lots of logging messages and also some output that resembles the following:
 
+```
+RESULTS from /tweets/hiveout
+NBA	91
+CoachBillick	89
+espn	69
+SportsCenter	42
+TheOnion	41
+ESPNStatsInfo	41
+TMZ	39
+darrenrovell	37
+BleacherReport	37
+MeridianoTV	37
+```
 
