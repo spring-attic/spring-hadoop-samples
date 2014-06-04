@@ -18,8 +18,9 @@
 		mapred.job.tracker=${hd.jt}
 	</configuration>
 
+    <!-- This sample requires a running Hive server - see hive.properties for defaults -->
 	<hive-server port="${hive.port}" auto-startup="true"
-	             properties-location="hive-server.properties"/>		     
+	             properties-location="hive-server.properties"/>
 	
 	<hive-client-factory host="${hive.host}" port="${hive.port}"/>	
 	
