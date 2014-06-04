@@ -1,0 +1,50 @@
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:batch="http://www.springframework.org/schema/batch"
+	xmlns:hdp="http://www.springframework.org/schema/hadoop"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+      	http://www.springframework.org/schema/batch	http://www.springframework.org/schema/batch/spring-batch.xsd
+      	http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd
+      	http://www.springframework.org/schema/hadoop http://www.springframework.org/schema/hadoop/spring-hadoop.xsd">
+
+    <import resource="batch-common-context.xml"/>
+
+	<context:property-placeholder location="hadoop.properties,hive.properties"/>
+	 
+	<context:component-scan base-package="org.springframework.samples.hadoop.hive" />
+	
+	<hdp:configuration>
+        fs.defaultFS=${hd.fs}
+	</hdp:configuration>
+
+    <hdp:script id="setupScript" location="file-prep.groovy" run-at-startup="true">
+        <hdp:property name="localSourceFile" value="${app.home}/${localSourceFile}"/>
+        <hdp:property name="inputDir" value="${tweets.input.path}"/>
+    </hdp:script>
+
+    <!-- This sample requires a running Hive server - see hive.properties for defaults -->
+    <hdp:hive-client-factory host="${hive.host}" port="${hive.port}"/>
+
+    <job id="hiveJob" xmlns="http://www.springframework.org/schema/batch">
+		<step id="influencer-step" next="result-step">
+			<tasklet ref="hive-script"/>
+		</step>
+        <step id="result-step">
+            <tasklet ref="results"/>
+        </step>
+	</job>
+
+    <hdp:hive-tasklet id="hive-script">
+        <hdp:script location="classpath:tweet-influencers.hql"/>
+    </hdp:hive-tasklet>
+
+    <hdp:script-tasklet id="results" scope="step">
+        <hdp:script location="classpath:results.groovy">
+            <hdp:property name="outputDir" value="/tweets/hiveout"/>
+        </hdp:script>
+    </hdp:script-tasklet>
+
+    <hdp:script id="hdfsScript" language="groovy" location="set-hive-permissions.groovy" run-at-startup="true"/>
+	
+</beans>
