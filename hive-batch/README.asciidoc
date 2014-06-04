@@ -10,6 +10,7 @@ You need to have a Hive server running for this app - see the https://cwiki.apac
 
 Quick steps to start Hive server (in a separate terminal window):
 
+    #(You need to have the Hadoop environment set up first)
     $ cd {dir where hive binary download is extracted}
     $ export HIVE_HOME=`pwd`
     $ export PATH=$HIVE_HOME/bin;$PATH
