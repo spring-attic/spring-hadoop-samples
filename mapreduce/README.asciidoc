@@ -9,11 +9,11 @@ Use the following commands to build and run the sample
     $ mvn clean package
     $ sh ./target/appassembler/bin/wordcount
 
-The default is to build and run against Hadoop 1.2.1. To support other versions there are currently some profiles provided:
+The default is to build and run against Hadoop 2.2.0. To support other versions there are currently some profiles provided:
 
-- Hadoop 2.2.0 
+- Hadoop 1.2.1 
 
-    $ mvn clean package -Phadoop22
+    $ mvn clean package -Phadoop12
 
 - Pivotal HD 1.1
 
