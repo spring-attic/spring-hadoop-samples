@@ -14,7 +14,6 @@ Together with Spring Integration and Spring Batch, Spring for Apache Hadoop can 
 ** MapReduce
 ** Pig
 ** Hive
-** Cascading
 * Workflow
 * Data collection and ingestion
 * Event Streams processing
