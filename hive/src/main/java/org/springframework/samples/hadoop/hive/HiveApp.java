@@ -37,6 +37,7 @@ public class HiveApp {
 		PasswordRepository repository = context.getBean(HiveTemplatePasswordRepository.class);
 		repository.processPasswordFile("/etc/passwd");
 		log.info("Count of password entries = " + repository.count());
-		log.warn("Please press [Ctrl-C] to terminate app");
+        context.close();
+		log.info("Hive Application Completed");
 	}
 }

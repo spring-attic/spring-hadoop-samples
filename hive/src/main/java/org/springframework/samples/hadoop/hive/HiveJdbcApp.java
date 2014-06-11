@@ -38,6 +38,7 @@ public class HiveJdbcApp {
 		JdbcPasswordRepository repo = context.getBean(JdbcPasswordRepository.class);		
 		repo.processPasswordFile("password-analysis.hql");	
 		log.info("Count of password entrires = " + repo.count());
-		log.warn("Please press [Ctrl-C] to terminate app");
+        context.close();
+        log.info("Hive Application Completed");
 	}
 }

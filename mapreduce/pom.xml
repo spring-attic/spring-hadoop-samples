@@ -15,7 +15,7 @@
 
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-		<spring.hadoop.version>2.0.0.RC4</spring.hadoop.version>
+		<spring.hadoop.version>2.0.0.RELEASE</spring.hadoop.version>
 		<hadoop.version>1.2.1</hadoop.version>
 		<hadoop.examples>hadoop-mapreduce-examples</hadoop.examples>
 		<mapreduce.framework>yarn</mapreduce.framework>
@@ -28,7 +28,7 @@
 				<activeByDefault>true</activeByDefault>
 			</activation>
 			<properties>
-				<spring.hadoop.version>2.0.0.RC4</spring.hadoop.version>
+				<spring.hadoop.version>2.0.0.RELEASE</spring.hadoop.version>
 				<hadoop.version>2.2.0</hadoop.version>
 				<hadoop.examples>hadoop-mapreduce-examples</hadoop.examples>
 				<mapreduce.framework>yarn</mapreduce.framework>
@@ -45,7 +45,7 @@
 		<profile>
 			<id>hadoop12</id>
 			<properties>
-				<spring.hadoop.version>2.0.0.RC4-hadoop12</spring.hadoop.version>
+				<spring.hadoop.version>2.0.0.RELEASE-hadoop12</spring.hadoop.version>
 				<hadoop.version>1.2.0</hadoop.version>
 				<hadoop.examples>hadoop-examples</hadoop.examples>
 				<mapreduce.framework>classic</mapreduce.framework>
@@ -54,7 +54,7 @@
 		<profile>
 			<id>phd1</id>
 			<properties>
-				<spring.hadoop.version>1.0.2.RELEASE-phd1</spring.hadoop.version>
+				<spring.hadoop.version>2.0.0.RELEASE-phd1</spring.hadoop.version>
 				<hadoop.version>2.0.5-alpha-gphd-2.1.0.0</hadoop.version>
 				<hadoop.examples>hadoop-mapreduce-examples</hadoop.examples>
 				<mapreduce.framework>yarn</mapreduce.framework>

@@ -34,6 +34,7 @@ public class HiveAppWithApacheLogs {
 		HiveRunner runner = context.getBean(HiveRunner.class);		
 		runner.call();
 
-		log.warn("Please press [Ctrl-C] to terminate app");
+        context.close();
+        log.info("Hive Application Completed");
 	}
 }
