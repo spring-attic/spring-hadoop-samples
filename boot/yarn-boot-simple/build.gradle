@@ -3,7 +3,7 @@ buildscript {
         maven { url "http://repo.spring.io/libs-milestone" }
     }
     dependencies {
-        classpath("org.springframework.boot:spring-boot-gradle-plugin:1.0.2.RELEASE")
+        classpath("org.springframework.boot:spring-boot-gradle-plugin:1.1.0.RELEASE")
     }
 }
 
@@ -20,12 +20,12 @@ repositories {
 }
 
 dependencies {
-    compile("org.springframework.data:spring-yarn-boot:2.0.0.RC4")
+    compile("org.springframework.data:spring-yarn-boot:2.0.0.RELEASE")
 }
 
 compileJava {
-    sourceCompatibility=1.6
-    targetCompatibility=1.6
+    sourceCompatibility=1.7
+    targetCompatibility=1.7
 }
 
 task clientJar(type: Jar) {
