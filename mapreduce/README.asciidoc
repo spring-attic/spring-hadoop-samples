@@ -35,7 +35,7 @@ The default is to build and run against Hadoop 2.2.0. To support other versions 
 If you are using the Quickstart VM you might have to adjust the YARN memory setting.
 +    
 Open the Cloudera Manager and go to the 'yarn' service. Then select "Configuration - View and Edit". Under the "ResourceManager Base Group" category
-there is a "Resource Management" option. Uner there, you should se "Container Memory Maximum" (yarn.scheduler.maximum-allocation-mb). 
+there is a "Resource Management" option. Under there, you should see "Container Memory Maximum" (yarn.scheduler.maximum-allocation-mb). 
 Change that to be 2 GiB. Save the changes and restart the 'yarn' service.
 +
 You also have to make sure that the `/user` directory is writeable, execute the following command:
