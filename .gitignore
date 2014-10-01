@@ -3,6 +3,7 @@
 .classpath
 .springBeans
 .gradle
+.idea
 *.class
 *.lk
 *.if
