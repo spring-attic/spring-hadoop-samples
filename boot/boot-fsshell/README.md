@@ -15,7 +15,7 @@ With maven:
 $ mvn clean package
 ```
 
-# Rung the application
+# Run the application
 
 With gradle:
 ```
