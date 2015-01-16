@@ -1,0 +1,34 @@
+buildscript {
+    repositories {
+        maven { url "http://repo.spring.io/libs-milestone" }
+    }
+    dependencies {
+        classpath("org.springframework.boot:spring-boot-gradle-plugin:1.2.1.RELEASE")
+    }
+}
+
+version =  '0.1.0'
+
+apply plugin: 'java'
+apply plugin: 'eclipse'
+apply plugin: 'idea'
+apply plugin: 'spring-boot'
+
+repositories {
+    mavenCentral()
+    maven { url "http://repo.spring.io/libs-milestone" }
+}
+
+dependencies {
+    compile("org.springframework.data:spring-data-hadoop-boot:2.1.0.RC1")
+    runtime("org.slf4j:slf4j-simple:1.7.6")
+}
+
+compileJava {
+    sourceCompatibility=1.7
+    targetCompatibility=1.7
+}
+
+task wrapper(type: Wrapper) {
+    gradleVersion = '2.2.1'
+}

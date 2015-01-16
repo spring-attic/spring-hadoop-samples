@@ -1,0 +1,6 @@
+spring:
+  main:
+    show_banner: false
+  hadoop:
+    fsUri: hdfs://localhost:8020
+
