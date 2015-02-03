@@ -14,8 +14,10 @@
 	<context:component-scan base-package="org.springframework.samples.hadoop.hive" />
 	
 	<configuration>
-		fs.default.name=${hd.fs}
-		mapred.job.tracker=${hd.jt}
+		fs.defaultFS=${hd.fs}
+		yarn.resourcemanager.address=${hd.rm}
+		mapreduce.framework.name=yarn
+		mapreduce.jobhistory.address=${hd.jh}
 	</configuration>
 
     <!-- This sample requires a running Hive server - see hive.properties for defaults -->

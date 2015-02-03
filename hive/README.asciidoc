@@ -8,7 +8,7 @@ There are three sample applications that use Hive. The examples are
 
 === Building and running
 
-This sample is configured to run with Apache Hadoop 1.2.1 stable release.
+This sample is configured to run with Apache Hadoop 2.6.0 stable release.
 
 Use the following commands to build and run the sample
 

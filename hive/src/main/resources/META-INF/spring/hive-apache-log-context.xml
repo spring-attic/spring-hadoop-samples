@@ -10,8 +10,10 @@
 	<context:property-placeholder location="hadoop.properties,hive.properties"/>
 
 	<configuration>
-		fs.default.name=${hd.fs}
-		mapred.job.tracker=${hd.jt}
+		fs.defaultFS=${hd.fs}
+		yarn.resourcemanager.address=${hd.rm}
+		mapreduce.framework.name=yarn
+		mapreduce.jobhistory.address=${hd.jh}
 	</configuration>
 
     <!-- This sample requires a running Hive server - see hive.properties for defaults -->
