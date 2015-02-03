@@ -1,11 +1,11 @@
 /*
- * Copyright 2013 the original author or authors.
+ * Copyright 2013-2015 the original author or authors.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *      http://www.apache.org/licenses/LICENSE-2.0
+ * http://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -15,8 +15,9 @@
  */
 package org.springframework.yarn.examples;
 
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertTrue;
+import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.CoreMatchers.notNullValue;
+import static org.hamcrest.MatcherAssert.assertThat;
 
 import java.util.concurrent.TimeUnit;
 
@@ -40,15 +41,15 @@ import org.springframework.yarn.test.junit.AbstractYarnClusterTests;
 public class KillApplicationTests extends AbstractYarnClusterTests {
 
 	@Test
-	@Timed(millis=130000)
+	@Timed(millis=150000)
 	public void testAppSubmission() throws Exception {
 		ApplicationId applicationId = submitApplication();
 		YarnApplicationState state = waitState(applicationId, 120, TimeUnit.SECONDS, YarnApplicationState.RUNNING);
-		assertNotNull(state);
+		assertThat(state, notNullValue());
 		getYarnClient().killApplication(applicationId);
-		state = getState(applicationId);
-		assertNotNull(state);
-		assertTrue(state.equals(YarnApplicationState.KILLED));
+		state = waitState(applicationId, 20, TimeUnit.SECONDS, YarnApplicationState.KILLED);
+		assertThat(state, notNullValue());
+		assertThat(state, is(YarnApplicationState.KILLED));
 	}
 
 }

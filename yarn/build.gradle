@@ -22,16 +22,16 @@ allprojects {
 	}
 }
 
-def hadoopDefault = "hadoop22"
+def hadoopDefault = "hadoop26"
 def hadoopDistro = project.hasProperty("distro") ? project.getProperty("distro") : hadoopDefault
-def springDataVersion = hadoop22SpringDataVersion
+def springDataVersion = hadoop26SpringDataVersion
 
 switch (hadoopDistro) {
 
-	// vanilla hadoop 2.2.x
-	case "hadoop22":
-		springDataVersion = hadoop22SpringDataVersion
-		println "Using Apache Hadoop 2.2.x Spring Hadoop Dependencies - [$springDataVersion]"
+	// vanilla hadoop 2.6.x
+	case "hadoop26":
+		springDataVersion = hadoop26SpringDataVersion
+		println "Using Apache Hadoop 2.6.x Spring Hadoop Dependencies - [$springDataVersion]"
 	break;
 
 	// pivotal
@@ -41,10 +41,10 @@ switch (hadoopDistro) {
 			println "Using default distro: Apache Hadoop Spring Hadoop Dependencies - [$springDataVersion]"
 		} else {
 			if (hadoopDistro == hadoopDefault) {
-				println "Using Apache Hadoop 2.2.x Spring Hadoop Dependencies - [$springDataVersion]"
+				println "Using Apache Hadoop 2.6.x Spring Hadoop Dependencies - [$springDataVersion]"
 			} else {
 				println "Failing build: $hadoopDistro is not a supported distro"
-				println "Supported distros: hadoop22"
+				println "Supported distros: hadoop26"
 				println "* default"
 				throw new InvalidUserDataException("$hadoopDistro is not a supported distro")
 			}
