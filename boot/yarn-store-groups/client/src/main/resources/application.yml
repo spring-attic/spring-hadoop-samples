@@ -1,0 +1,19 @@
+spring:
+    main:
+        show_banner: false
+    hadoop:
+        fsUri: hdfs://localhost:8020
+        resourceManagerHost: localhost
+    yarn:
+        appType: BOOT
+        appName: yarn-store-groups
+        applicationBaseDir: /app/
+        client:
+            clientClass: org.springframework.yarn.client.DefaultApplicationYarnClient
+            files:
+              - "file:dist/target/dist/appmaster-0.1.0.jar"
+              - "file:dist/target/dist/container-0.1.0.jar"
+            launchcontext:
+                archiveFile: appmaster-0.1.0.jar
+            resource:
+                memory: 1g

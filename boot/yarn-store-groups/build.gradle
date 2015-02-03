@@ -1,0 +1,76 @@
+buildscript {
+	repositories {
+		maven { url "http://repo.spring.io/libs-release" }
+	}
+	dependencies {
+		classpath("org.springframework.boot:spring-boot-gradle-plugin:1.2.1.RELEASE")
+	}
+}
+
+allprojects {
+	apply plugin: 'base'
+}
+
+subprojects { subproject ->
+	apply plugin: 'java'
+	apply plugin: 'eclipse'
+	apply plugin: 'idea'
+	version =  '0.1.0'
+	repositories {
+		mavenCentral()
+		maven { url "http://repo.spring.io/libs-release" }
+	}
+	task copyJars(type: Copy) {
+		from "$buildDir/libs"
+		into "$rootDir/dist/target/dist/"
+		include "**/*.jar"
+	}
+	assemble.doLast {copyJars.execute()}
+
+	configurations {
+		all*.exclude group: 'ch.qos.logback'
+		all*.exclude group: 'javax.servlet', module: 'servlet-api', version: '2.5'
+	}
+
+}
+
+project('client') {
+	apply plugin: 'spring-boot'
+	dependencies {
+		compile("org.springframework.data:spring-yarn-boot-cli:2.1.0.RELEASE")
+	}
+}
+
+project('appmaster') {
+	apply plugin: 'spring-boot'
+	dependencies {
+		compile("org.springframework.data:spring-yarn-boot:2.1.0.RELEASE")
+		compile("org.springframework.boot:spring-boot-starter-web:1.2.1.RELEASE")
+		compile("org.springframework.boot:spring-boot-starter-actuator:1.2.1.RELEASE")
+	}
+}
+
+project('container') {
+	apply plugin: 'spring-boot'
+	dependencies {
+		compile("org.springframework.data:spring-yarn-boot:2.1.0.RELEASE")
+		compile("org.springframework.data:spring-data-hadoop-store:2.1.0.RELEASE")
+		compile("org.springframework.boot:spring-boot-starter-web:1.2.1.RELEASE")
+		compile("org.springframework.boot:spring-boot-starter-actuator:1.2.1.RELEASE")
+	}
+}
+
+project('dist') {
+	dependencies {
+		compile project(":client")
+		compile project(":appmaster")
+		compile project(":container")
+	}
+	clean.doLast {ant.delete(dir: "target")}
+	jar.enabled = false
+}
+
+task wrapper(type: Wrapper) {
+	gradleVersion = '1.11'
+}
+

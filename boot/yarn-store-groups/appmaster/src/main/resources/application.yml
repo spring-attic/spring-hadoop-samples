@@ -1,0 +1,37 @@
+server:
+    port: 0
+endpoints:
+    shutdown:
+        enabled: true
+spring:
+    hadoop:
+        fsUri: hdfs://localhost:8020
+        resourceManagerHost: localhost
+    yarn:
+        appType: BOOT
+        appName: yarn-store-groups
+        applicationBaseDir: /app/
+        appmaster:
+            appmasterClass: org.springframework.yarn.am.cluster.ManagedContainerClusterAppmaster
+            keepContextAlive: true
+            containercluster:
+                enabled: true
+                clusters:
+                    store:
+                        projection:
+                            type: default
+                            data:
+                                any: 1
+                        resource:
+                            priority: 10
+                            memory: 64
+                            virtualCores: 1
+                        launchcontext:
+                            locality: false
+                            archiveFile: container-0.1.0.jar
+        endpoints:
+            containercluster:
+                enabled: true
+            containerregister:
+                enabled: true
+
