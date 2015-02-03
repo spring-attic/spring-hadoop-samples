@@ -1,9 +1,9 @@
 buildscript {
     repositories {
-        maven { url "http://repo.spring.io/libs-milestone" }
+        maven { url "http://repo.spring.io/libs-release" }
     }
     dependencies {
-        classpath("org.springframework.boot:spring-boot-gradle-plugin:1.1.0.RELEASE")
+        classpath("org.springframework.boot:spring-boot-gradle-plugin:1.2.1.RELEASE")
     }
 }
 
@@ -16,11 +16,11 @@ apply plugin: 'spring-boot'
 
 repositories {
     mavenCentral()
-    maven { url "http://repo.spring.io/libs-milestone" }
+    maven { url "http://repo.spring.io/libs-release" }
 }
 
 dependencies {
-    compile("org.springframework.data:spring-yarn-boot:2.0.0.RELEASE")
+    compile("org.springframework.data:spring-yarn-boot:2.1.0.RELEASE")
 }
 
 compileJava {
