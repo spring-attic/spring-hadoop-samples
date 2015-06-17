@@ -3,7 +3,7 @@ buildscript {
 		maven { url "http://repo.spring.io/libs-release" }
 	}
 	dependencies {
-		classpath("org.springframework.boot:spring-boot-gradle-plugin:1.2.1.RELEASE")
+		classpath("org.springframework.boot:spring-boot-gradle-plugin:1.2.3.RELEASE")
 	}
 }
 
@@ -37,26 +37,26 @@ subprojects { subproject ->
 project('client') {
 	apply plugin: 'spring-boot'
 	dependencies {
-		compile("org.springframework.data:spring-yarn-boot-cli:2.1.0.RELEASE")
+		compile("org.springframework.data:spring-yarn-boot-cli:2.2.0.RELEASE")
 	}
 }
 
 project('appmaster') {
 	apply plugin: 'spring-boot'
 	dependencies {
-		compile("org.springframework.data:spring-yarn-boot:2.1.0.RELEASE")
-		compile("org.springframework.boot:spring-boot-starter-web:1.2.1.RELEASE")
-		compile("org.springframework.boot:spring-boot-starter-actuator:1.2.1.RELEASE")
+		compile("org.springframework.data:spring-yarn-boot:2.2.0.RELEASE")
+		compile("org.springframework.boot:spring-boot-starter-web:1.2.3.RELEASE")
+		compile("org.springframework.boot:spring-boot-starter-actuator:1.2.3.RELEASE")
 	}
 }
 
 project('container') {
 	apply plugin: 'spring-boot'
 	dependencies {
-		compile("org.springframework.data:spring-yarn-boot:2.1.0.RELEASE")
-		compile("org.springframework.data:spring-data-hadoop-store:2.1.0.RELEASE")
-		compile("org.springframework.boot:spring-boot-starter-web:1.2.1.RELEASE")
-		compile("org.springframework.boot:spring-boot-starter-actuator:1.2.1.RELEASE")
+		compile("org.springframework.data:spring-yarn-boot:2.2.0.RELEASE")
+		compile("org.springframework.data:spring-data-hadoop-store:2.2.0.RELEASE")
+		compile("org.springframework.boot:spring-boot-starter-web:1.2.3.RELEASE")
+		compile("org.springframework.boot:spring-boot-starter-actuator:1.2.3.RELEASE")
 	}
 }
 

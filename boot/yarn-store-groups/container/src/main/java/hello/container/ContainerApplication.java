@@ -11,7 +11,7 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.hadoop.store.PartitionDataStoreWriter;
-import org.springframework.data.hadoop.store.config.annotation.EnableDataStoreTextWriter;
+import org.springframework.data.hadoop.store.config.annotation.EnableDataStorePartitionTextWriter;
 import org.springframework.data.hadoop.store.config.annotation.SpringDataStoreTextWriterConfigurerAdapter;
 import org.springframework.data.hadoop.store.config.annotation.builders.DataStoreTextWriterConfigurer;
 import org.springframework.util.concurrent.ListenableFuture;
@@ -53,7 +53,6 @@ public class ContainerApplication {
 			return myFuture;
 		}
 
-
 	}
 
 	static class MyFuture extends SettableListenableFuture<Boolean> {
@@ -68,7 +67,7 @@ public class ContainerApplication {
 	}
 
 	@Configuration
-	@EnableDataStoreTextWriter
+	@EnableDataStorePartitionTextWriter
 	static class Config extends SpringDataStoreTextWriterConfigurerAdapter {
 
 		@Override
