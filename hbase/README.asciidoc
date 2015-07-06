@@ -1,0 +1,14 @@
+== Hbase example
+
+A HbaseTemplate-based example of a UserRepository used for adding and accessing User records.
+
+=== Building and running
+
+Use the following commands to build and run the sample
+
+    $ mvn clean package
+    $ sh ./target/appassembler/bin/usercount
+
+
+
+
