@@ -9,25 +9,17 @@ Use the following commands to build and run the sample
     $ mvn clean package
     $ sh ./target/appassembler/bin/wordcount
 
-The default is to build and run against Hadoop 2.2.0. To support other versions there are currently some profiles provided:
+The default is to build and run against Hadoop 2.6.0. To support other versions there are currently some profiles provided:
 
-- Hadoop 1.2.1 
+- Pivotal HD 3.0
 
-    $ mvn clean package -Phadoop12
+    $ mvn clean package -Pphd30
 
-- Pivotal HD 1.1
+- Hortonworks HDP (version 2.2.6)
 
-    $ mvn clean package -Pphd1
+    $ mvn clean package -Phdp22
 
-- Pivotal HD 2.0
-
-    $ mvn clean package -Pphd20
-
-- Hortonworks HDP 2.1
-
-    $ mvn clean package -Phdp21
-
-- Cloudera CDH5
+- Cloudera CDH5 (version 5.3.3)
 
     $ mvn clean package -Pcdh5
     
@@ -53,8 +45,10 @@ To configure the application to connect to the namenode and jobtracker, use the 
 <context:property-placeholder location="hadoop.properties"/>
 
 <configuration>
-  fs.default.name=${hd.fs}
-  mapred.job.tracker=${hd.jt}
+  fs.defaultFS=${hd.fs}
+  yarn.resourcemanager.address=${hd.rm}
+  mapreduce.framework.name=yarn
+  mapreduce.jobhistory.address=${hd.jh}
 </configuration>
 ----
 
@@ -100,8 +94,7 @@ Now that the script and job are managed by the container, they can be dependency
 ==== Declaring a JobRunner
 ----
 <job-runner id="runner" run-at-startup="true"
-    	    pre-action="setupScript"
-	    job-ref="wordcountJob" />	
+    	      pre-action="setupScript"
+	          job-ref="wordcountJob" />	
 ----
-
 

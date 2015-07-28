@@ -15,23 +15,19 @@
 
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-		<spring.hadoop.version>2.0.0.RELEASE</spring.hadoop.version>
-		<hadoop.version>1.2.1</hadoop.version>
 		<hadoop.examples>hadoop-mapreduce-examples</hadoop.examples>
 		<mapreduce.framework>yarn</mapreduce.framework>
 	</properties>
 
 	<profiles>
 		<profile>
-			<id>hadoop22</id>
+			<id>hadoop26</id>
 			<activation>
 				<activeByDefault>true</activeByDefault>
 			</activation>
 			<properties>
-				<spring.hadoop.version>2.0.2.RELEASE</spring.hadoop.version>
-				<hadoop.version>2.2.0</hadoop.version>
-				<hadoop.examples>hadoop-mapreduce-examples</hadoop.examples>
-				<mapreduce.framework>yarn</mapreduce.framework>
+				<spring.hadoop.version>2.2.0.RELEASE</spring.hadoop.version>
+				<hadoop.version>2.6.0</hadoop.version>
 			</properties>
 			<dependencies>
 				<dependency>
@@ -43,38 +39,10 @@
 			</dependencies>
 		</profile>
 		<profile>
-			<id>hadoop24</id>
+			<id>phd30</id>
 			<properties>
-				<spring.hadoop.version>2.0.2.RELEASE-hadoop24</spring.hadoop.version>
-				<hadoop.version>2.4.1</hadoop.version>
-				<hadoop.examples>hadoop-mapreduce-examples</hadoop.examples>
-				<mapreduce.framework>yarn</mapreduce.framework>
-			</properties>
-			<dependencies>
-				<dependency>
-					<groupId>org.apache.hadoop</groupId>
-					<artifactId>hadoop-mapreduce-client-jobclient</artifactId>
-					<version>${hadoop.version}</version>
-					<scope>runtime</scope>
-				</dependency>
-			</dependencies>
-		</profile>
-		<profile>
-			<id>hadoop12</id>
-			<properties>
-				<spring.hadoop.version>2.0.2.RELEASE-hadoop12</spring.hadoop.version>
-				<hadoop.version>1.2.0</hadoop.version>
-				<hadoop.examples>hadoop-examples</hadoop.examples>
-				<mapreduce.framework>classic</mapreduce.framework>
-			</properties>
-		</profile>
-		<profile>
-			<id>phd1</id>
-			<properties>
-				<spring.hadoop.version>2.0.2.RELEASE-phd1</spring.hadoop.version>
-				<hadoop.version>2.0.5-alpha-gphd-2.1.0.0</hadoop.version>
-				<hadoop.examples>hadoop-mapreduce-examples</hadoop.examples>
-				<mapreduce.framework>yarn</mapreduce.framework>
+				<spring.hadoop.version>2.2.0.RELEASE-phd30</spring.hadoop.version>
+				<hadoop.version>2.6.0.3.0.0.0-249</hadoop.version>
 			</properties>
 			<dependencies>
 				<dependency>
@@ -99,7 +67,7 @@
 											<fileset dir="data"/>
 										</copy>
 										<copy todir="target/appassembler/etc">
-											<fileset dir="etc/phd1"/>
+											<fileset dir="etc/phd30"/>
 										</copy>
 									</tasks>
 								</configuration>
@@ -113,12 +81,10 @@
 			</build>
 		</profile>
 		<profile>
-			<id>phd20</id>
+			<id>hdp22</id>
 			<properties>
-				<spring.hadoop.version>2.0.2.RELEASE-phd20</spring.hadoop.version>
-				<hadoop.version>2.2.0-gphd-3.0.1.0</hadoop.version>
-				<hadoop.examples>hadoop-mapreduce-examples</hadoop.examples>
-				<mapreduce.framework>yarn</mapreduce.framework>
+				<spring.hadoop.version>2.2.0.RELEASE-hdp22</spring.hadoop.version>
+				<hadoop.version>2.6.0.2.2.6.0-2800</hadoop.version>
 			</properties>
 			<dependencies>
 				<dependency>
@@ -143,51 +109,7 @@
 											<fileset dir="data"/>
 										</copy>
 										<copy todir="target/appassembler/etc">
-											<fileset dir="etc/phd20"/>
-										</copy>
-									</tasks>
-								</configuration>
-								<goals>
-									<goal>run</goal>
-								</goals>
-							</execution>
-						</executions>
-					</plugin>
-				</plugins>
-			</build>
-		</profile>
-		<profile>
-			<id>hdp21</id>
-			<properties>
-				<spring.hadoop.version>2.0.2.RELEASE-hdp21</spring.hadoop.version>
-				<hadoop.version>2.4.0</hadoop.version>
-				<hadoop.examples>hadoop-mapreduce-examples</hadoop.examples>
-				<mapreduce.framework>yarn</mapreduce.framework>
-			</properties>
-			<dependencies>
-				<dependency>
-					<groupId>org.apache.hadoop</groupId>
-					<artifactId>hadoop-mapreduce-client-jobclient</artifactId>
-					<version>${hadoop.version}</version>
-					<scope>runtime</scope>
-				</dependency>
-			</dependencies>
-			<build>
-				<plugins>
-					<plugin>
-						<groupId>org.apache.maven.plugins</groupId>
-						<artifactId>maven-antrun-plugin</artifactId>
-						<executions>
-							<execution>
-								<id>config</id>
-								<phase>package</phase>
-								<configuration>
-									<tasks>
-										<copy todir="target/appassembler/data">
-											<fileset dir="data"/>
-										</copy>
-										<copy todir="target/appassembler/etc">
-											<fileset dir="etc/hdp21"/>
+											<fileset dir="etc/hdp22"/>
 										</copy>
 									</tasks>
 								</configuration>
@@ -203,10 +125,8 @@
 		<profile>
 			<id>cdh5</id>
 			<properties>
-				<spring.hadoop.version>2.0.2.RELEASE-cdh5</spring.hadoop.version>
-				<hadoop.version>2.3.0-cdh5.0.0</hadoop.version>
-				<hadoop.examples>hadoop-mapreduce-examples</hadoop.examples>
-				<mapreduce.framework>yarn</mapreduce.framework>
+				<spring.hadoop.version>2.2.0.RELEASE-cdh5</spring.hadoop.version>
+				<hadoop.version>2.5.0-cdh5.3.3</hadoop.version>
 			</properties>
 			<dependencies>
 				<dependency>
@@ -275,10 +195,18 @@
 		</dependency>
 	</dependencies>
 
-	<repositories>
+	<repositories>	
+		<repository>
+			<id>hortonworks</id>
+			<url>http://repo.hortonworks.com/content/repositories/releases</url>
+		</repository>
+		<repository>
+			<id>hortonworks-jetty</id>
+			<url>http://repo.hortonworks.com/content/repositories/jetty-hadoop</url>
+		</repository>
 		<repository>
 			<id>spring-milestone</id>
-			<url>http://repo.springsource.org/libs-milestone</url>
+			<url>http://repo.spring.io/libs-milestone</url>
 		</repository>
 	</repositories>
 

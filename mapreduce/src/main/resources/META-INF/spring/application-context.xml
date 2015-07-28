@@ -10,10 +10,10 @@
 	<context:property-placeholder location="hadoop.properties"/>
 
 	<configuration>
-	  fs.default.name=${hd.fs}
-	  mapred.job.tracker=${hd.jt}
+	  fs.defaultFS=${hd.fs}
 	  yarn.resourcemanager.address=${hd.rm}
-	  mapreduce.framework.name=${mr.fw}
+	  mapreduce.framework.name=yarn
+	  mapreduce.jobhistory.address=${hd.jh}
 	</configuration>
 
 	<job id="wordcountJob"
