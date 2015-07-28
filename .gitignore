@@ -4,6 +4,8 @@
 .springBeans
 .gradle
 .idea
+*.iws
+*.ipr
 *.class
 *.lk
 *.if
