@@ -3,7 +3,7 @@ buildscript {
         maven { url "http://repo.spring.io/libs-release" }
     }
     dependencies {
-        classpath("org.springframework.boot:spring-boot-gradle-plugin:1.2.1.RELEASE")
+        classpath("org.springframework.boot:spring-boot-gradle-plugin:1.2.3.RELEASE")
     }
 }
 
@@ -20,7 +20,7 @@ repositories {
 }
 
 dependencies {
-    compile("org.springframework.data:spring-yarn-boot:2.1.0.RELEASE")
+    compile("org.springframework.data:spring-yarn-boot:2.2.0.RELEASE")
 }
 
 compileJava {
@@ -76,5 +76,5 @@ bootJars.dependsOn = [clientBoot, appmasterBoot, containerBoot]
 build.dependsOn(bootJars)
 
 task wrapper(type: Wrapper) {
-    gradleVersion = '1.11'
+    gradleVersion = '2.2.1'
 }
