@@ -3,6 +3,8 @@
 This repository contains several sample applications that show how you can use
 Spring for Apache Hadoop.
 
+NOTE: These samples are built using version 2.2.0.RELEASE of Spring for Apache Hadoop project. For examples built against older versions check out the Git "tag" that corresponds to your desired version.
+
 === Overview of Spring for Apache Hadoop
 
 Hadoop has a poor out of the box programming model.  Writing applications for Hadoop generally turn into a collection of scripts calling Hadoop command line applications.  Spring for Apache Hadoop provides a consistent programming model and declarative configuration model for developing Hadoop applications.
