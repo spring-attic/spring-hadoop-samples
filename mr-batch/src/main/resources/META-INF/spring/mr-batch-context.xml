@@ -1,0 +1,57 @@
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:batch="http://www.springframework.org/schema/batch"
+	xmlns:hdp="http://www.springframework.org/schema/hadoop"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+      	http://www.springframework.org/schema/batch	http://www.springframework.org/schema/batch/spring-batch.xsd
+      	http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd
+      	http://www.springframework.org/schema/hadoop http://www.springframework.org/schema/hadoop/spring-hadoop.xsd">
+
+    <import resource="batch-common-context.xml"/>
+
+	<context:property-placeholder location="hadoop.properties"/>
+	 
+	<context:component-scan base-package="org.springframework.samples.hadoop.mapreduce" />
+	
+	<hdp:configuration>
+        fs.defaultFS=${hd.fs}
+	</hdp:configuration>
+
+    <hdp:script id="setupScript" location="file-prep.groovy" run-at-startup="true">
+        <hdp:property name="localSourceFile" value="${app.home}/${localSourceFile}"/>
+        <hdp:property name="inputDir" value="${tweets.input.path}"/>
+        <hdp:property name="outputDir" value="${tweets.output.path}"/>
+    </hdp:script>
+
+    <!-- required since Hadoop Job is a class not an interface and we need to use a Job with step scope to access #{jobParameters['...']} -->
+    <bean class="org.springframework.batch.core.scope.StepScope">
+        <property name="proxyTargetClass" value="true"/>
+    </bean>
+
+    <job id="job" xmlns="http://www.springframework.org/schema/batch">
+        <step id="hashtagcount" next="result-step">
+            <tasklet ref="hashtagcount-tasklet" />
+        </step>
+        <step id="result-step">
+            <tasklet ref="results"/>
+        </step>
+    </job>
+
+    <hdp:job-tasklet id="hashtagcount-tasklet" job-ref="hashtagcountJob" scope="step"/>
+
+    <hdp:job id="hashtagcountJob"
+        input-path="${tweets.input.path}"
+        output-path="${tweets.output.path}"
+        jar="file:${app.repo}/spring-hadoop-samples-batch-mr-1.0.0.BUILD-SNAPSHOT.jar"
+        mapper="org.springframework.samples.hadoop.mapreduce.HashtagCount$TokenizerMapper"
+        reducer="org.springframework.samples.hadoop.mapreduce.HashtagCount$LongSumReducer"
+        scope="step" />
+
+    <hdp:script-tasklet id="results" scope="step">
+        <hdp:script location="classpath:results.groovy">
+            <hdp:property name="outputDir" value="${tweets.output.path}"/>
+        </hdp:script>
+    </hdp:script-tasklet>
+	
+</beans>
