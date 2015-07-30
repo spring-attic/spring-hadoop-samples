@@ -4,7 +4,7 @@ Sample batch application that uses Hive to do a simple Twitter search analysis
 
 === Building and running
 
-This sample is configured to run with Apache Hadoop 2.2.0 stable release and Hive 0.12.0.
+This sample is configured to run with Apache Hadoop 2.6.0 stable release and Hive 0.13.1.
 
 You need to have a Hive server running for this app - see the https://cwiki.apache.org/confluence/display/Hive/GettingStarted[Hive Wiki]
 
@@ -13,7 +13,7 @@ Quick steps to start Hive server (in a separate terminal window):
     #(You need to have the Hadoop environment set up first)
     $ cd {dir where hive binary download is extracted}
     $ export HIVE_HOME=`pwd`
-    $ export PATH=$HIVE_HOME/bin;$PATH
+    $ export PATH=$HIVE_HOME/bin:$PATH
     $ hive --service hiveserver
 
 Use the following commands to build and run the sample
