@@ -35,7 +35,7 @@ public class HiveApp {
 		template.query("show tables;");
 
 		PasswordRepository repository = context.getBean(HiveTemplatePasswordRepository.class);
-		repository.processPasswordFile("/etc/passwd");
+		repository.processPasswordFile("/user/hive/input/passwd");
 		log.info("Count of password entries = " + repository.count());
         context.close();
 		log.info("Hive Application Completed");

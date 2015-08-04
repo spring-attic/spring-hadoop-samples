@@ -21,24 +21,23 @@ import org.springframework.context.support.AbstractApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 import org.springframework.data.hadoop.hive.HiveTemplate;
 
-public class HiveJdbcApp {
+public class HiveClientApp {
 
-	private static final Log log = LogFactory.getLog(HiveJdbcApp.class);
+	private static final Log log = LogFactory.getLog(HiveClientApp.class);
 
 	public static void main(String[] args) throws Exception {
 		AbstractApplicationContext context = new ClassPathXmlApplicationContext(
-				"/META-INF/spring/hive-context.xml", HiveJdbcApp.class);
+				"/META-INF/spring/hive-context.xml", HiveClientApp.class);
 		log.info("Hive Application Running");
-		context.registerShutdownHook();	
-		
+		context.registerShutdownHook();
+
 		HiveTemplate template = context.getBean(HiveTemplate.class);
 		template.query("show tables;");
 
-
-		JdbcPasswordRepository repo = context.getBean(JdbcPasswordRepository.class);		
-		repo.processPasswordFile("password-analysis.hql");	
-		log.info("Count of password entrires = " + repo.count());
+		PasswordRepository repository = context.getBean(HiveClientPasswordRepository.class);
+		repository.processPasswordFile("/user/hive/input/passwd");
+		log.info("Count of password entries = " + repository.count());
         context.close();
-        log.info("Hive Application Completed");
+		log.info("Hive Application Completed");
 	}
 }

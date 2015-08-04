@@ -7,8 +7,6 @@
 	  http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd
 	  http://www.springframework.org/schema/hadoop http://www.springframework.org/schema/hadoop/spring-hadoop.xsd">
 
-	<beans:import resource="jdbc-context.xml"/>
-
 	<context:property-placeholder location="hadoop.properties,hive.properties"/>
 	 
 	<context:component-scan base-package="org.springframework.samples.hadoop.hive" />
@@ -20,19 +18,21 @@
 		mapreduce.jobhistory.address=${hd.jh}
 	</configuration>
 
-    <!-- This sample requires a running Hive server - see hive.properties for defaults -->
-	<hive-server port="${hive.port}" auto-startup="true"
-	             properties-location="hive-server.properties"/>
-	
+	<script id="hdfsScript" language="groovy" location="set-hive-permissions.groovy" run-at-startup="true"/>
+
+	<script id="setupScript" location="copy-files.groovy" run-at-startup="true">
+		<property name="localSourceFile" value="${basedir}/${localSourceFile}"/>
+		<property name="inputDir" value="${hive.input.path}"/>
+	</script>
+
+	<!-- This sample requires a running Hive server -->
 	<hive-client-factory host="${hive.host}" port="${hive.port}"/>	
 	
-	<hive-template id="hiveTemplate"/>		
+	<hive-template id="hiveTemplate"/>
  
 	<hive-runner id="hiveRunner" hive-client-factory-ref="hiveClientFactory" run-at-startup="false"
-			     pre-action="hdfsScript">
+			     pre-action="setupScript">
 		<script location="password-analysis.hql"/>
 	</hive-runner>
-		
-	<script id="hdfsScript" language="groovy" location="set-hive-permissions.groovy" run-at-startup="true"/>
-	
+
 </beans:beans>

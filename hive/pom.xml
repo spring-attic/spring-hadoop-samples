@@ -156,8 +156,8 @@
 							<name>hiveApp</name>
 						</program>
 						<program>
-							<mainClass>org.springframework.samples.hadoop.hive.HiveJdbcApp</mainClass>
-							<name>hiveAppJdbc</name>
+							<mainClass>org.springframework.samples.hadoop.hive.HiveClientApp</mainClass>
+							<name>hiveClientApp</name>
 						</program>
 						<program>
 							<mainClass>org.springframework.samples.hadoop.hive.HiveAppWithApacheLogs</mainClass>

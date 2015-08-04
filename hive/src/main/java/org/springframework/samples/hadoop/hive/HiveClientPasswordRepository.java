@@ -10,10 +10,10 @@ import org.springframework.data.hadoop.hive.HiveClientFactory;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public class HivePasswordRepository implements PasswordRepository {
+public class HiveClientPasswordRepository implements PasswordRepository {
 
 	private static final Log logger = LogFactory
-			.getLog(HivePasswordRepository.class);
+			.getLog(HiveClientPasswordRepository.class);
 
 	private HiveClientFactory hiveClientFactory;
 
@@ -21,7 +21,7 @@ public class HivePasswordRepository implements PasswordRepository {
 	String tableName;
 
 	@Autowired
-	public HivePasswordRepository(HiveClientFactory hiveClientFactory) {
+	public HiveClientPasswordRepository(HiveClientFactory hiveClientFactory) {
 		this.hiveClientFactory = hiveClientFactory;
 	}
 	
@@ -33,9 +33,9 @@ public class HivePasswordRepository implements PasswordRepository {
 			return Long.parseLong(hiveClient.fetchOne());
 			// checked exceptions
 		} catch (HiveServerException ex) {
-			throw translateExcpetion(ex);
+			throw translateException(ex);
 		} catch (org.apache.thrift.TException tex) {
-			throw translateExcpetion(tex);
+			throw translateException(tex);
 		} finally {
 			try {
 				hiveClient.shutdown();
@@ -55,7 +55,7 @@ public class HivePasswordRepository implements PasswordRepository {
 		return hiveClientFactory.getHiveClient();
 	}
 
-	private RuntimeException translateExcpetion(Exception ex) {
+	private RuntimeException translateException(Exception ex) {
 		return new RuntimeException(ex);
 	}
 

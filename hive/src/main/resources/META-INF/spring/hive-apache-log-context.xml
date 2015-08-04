@@ -16,16 +16,36 @@
 		mapreduce.jobhistory.address=${hd.jh}
 	</configuration>
 
+	<script id="hdfsScript" language="groovy" location="set-hive-permissions.groovy" run-at-startup="true"/>
+
+	<script id="setupScript" language="groovy" run-at-startup="true">
+		<property name="localSourceFile" value="${basedir}/${localLogFile}"/>
+		<property name="inputDir" value="${hive.input.path}"/>
+		<property name="outputDir" value="${hive.output.path}"/>
+		if (!fsh.test(inputDir)) {
+			fsh.mkdir(inputDir);
+			fsh.chmod(700, inputDir)
+		}
+		fsh.rm(inputDir+"/*");
+		if (!fsh.test(outputDir)) {
+			fsh.mkdir(outputDir);
+			fsh.chmod(700, outputDir)
+		}
+		fsh.rm(outputDir+"/*");
+		fsh.copyFromLocal(localSourceFile, inputDir);
+		fsh.copyFromLocal("${app.repo}/hive-contrib-${hive.version}.jar", inputDir);
+	</script>
+
     <!-- This sample requires a running Hive server - see hive.properties for defaults -->
 	<hive-client-factory host="${hive.host}" port="${hive.port}"/>
 	 
 	<hive-runner id="hiveRunner" run-at-startup="false" >
 		<script location="apache-log-simple.hql">
 				<arguments>
-					hiveContribJar=${app.repo}/hive-contrib-${hive.version}.jar
-					localInPath="${basedir}/data/apache.log"
+					hiveContribJar=hdfs://${hive.input.path}/hive-contrib-${hive.version}.jar
+					localInPath="${hive.input.path}/apache.log"
 				</arguments>
-		</script>			
+		</script>
 	</hive-runner>
 
 </beans:beans>

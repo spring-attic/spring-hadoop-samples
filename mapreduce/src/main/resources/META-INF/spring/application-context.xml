@@ -27,7 +27,7 @@
 		<property name="localSourceFile" value="${basedir}/${localSourceFile}"/>
 		<property name="inputDir" value="${wordcount.input.path}"/>
 		<property name="outputDir" value="${wordcount.output.path}"/>
-	</script>	
+	</script>
  
 	<job-runner id="runner" run-at-startup="true"
 	    	    pre-action="setupScript"
