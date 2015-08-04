@@ -31,7 +31,7 @@
 			fsh.mkdir(outputDir);
 			fsh.chmod(700, outputDir)
 		}
-		fsh.rm(outputDir+"/*");
+		fsh.rmr(outputDir+"/*");
 		fsh.copyFromLocal(localSourceFile, inputDir);
 		fsh.copyFromLocal("${app.repo}/hive-contrib-${hive.version}.jar", inputDir);
 	</script>
