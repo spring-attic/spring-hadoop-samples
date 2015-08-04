@@ -25,8 +25,14 @@
 		<property name="inputDir" value="${hive.input.path}"/>
 	</script>
 
-	<!-- This sample requires a running Hive server -->
-	<hive-client-factory host="${hive.host}" port="${hive.port}"/>	
+	<!-- This sample requires a running HiveServer2 -->
+	<hive-client-factory id="hiveClientFactory" hive-data-source-ref="hiveDataSource"/>
+
+	<beans:bean id="hiveDriver" class="org.apache.hive.jdbc.HiveDriver"/>
+	<beans:bean id="hiveDataSource" class="org.springframework.jdbc.datasource.SimpleDriverDataSource">
+		<beans:constructor-arg name="driver" ref="hiveDriver"/>
+		<beans:constructor-arg name="url" value="${hive.url}"/>
+	</beans:bean>
 	
 	<hive-template id="hiveTemplate"/>
  

@@ -2,12 +2,13 @@ package org.springframework.samples.hadoop.hive;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.apache.hadoop.hive.service.HiveClient;
-import org.apache.hadoop.hive.service.HiveServerException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.data.hadoop.hive.HiveClient;
 import org.springframework.data.hadoop.hive.HiveClientFactory;
 import org.springframework.stereotype.Repository;
+
+import java.sql.SQLException;
 
 @Repository
 public class HiveClientPasswordRepository implements PasswordRepository {
@@ -29,17 +30,11 @@ public class HiveClientPasswordRepository implements PasswordRepository {
 	public Long count() {
 		HiveClient hiveClient = createHiveClient();
 		try {
-			hiveClient.execute("select count(*) from " + tableName);
-			return Long.parseLong(hiveClient.fetchOne());
-			// checked exceptions
-		} catch (HiveServerException ex) {
-			throw translateException(ex);
-		} catch (org.apache.thrift.TException tex) {
-			throw translateException(tex);
+			return Long.parseLong(hiveClient.executeAndfetchOne("select count(*) from " + tableName));
 		} finally {
 			try {
 				hiveClient.shutdown();
-			} catch (org.apache.thrift.TException tex) {
+			} catch (SQLException tex) {
 				logger.debug(
 						"Unexpected exception on shutting down HiveClient", tex);
 			}

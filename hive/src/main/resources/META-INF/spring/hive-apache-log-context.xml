@@ -36,8 +36,14 @@
 		fsh.copyFromLocal("${app.repo}/hive-contrib-${hive.version}.jar", inputDir);
 	</script>
 
-    <!-- This sample requires a running Hive server - see hive.properties for defaults -->
-	<hive-client-factory host="${hive.host}" port="${hive.port}"/>
+	<!-- This sample requires a running HiveServer2 -->
+	<hive-client-factory id="hiveClientFactory" hive-data-source-ref="hiveDataSource"/>
+
+	<beans:bean id="hiveDriver" class="org.apache.hive.jdbc.HiveDriver"/>
+	<beans:bean id="hiveDataSource" class="org.springframework.jdbc.datasource.SimpleDriverDataSource">
+		<beans:constructor-arg name="driver" ref="hiveDriver"/>
+		<beans:constructor-arg name="url" value="${hive.url}"/>
+	</beans:bean>
 	 
 	<hive-runner id="hiveRunner" run-at-startup="false" >
 		<script location="apache-log-simple.hql">
