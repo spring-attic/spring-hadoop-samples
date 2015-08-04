@@ -3,7 +3,7 @@
 There are three sample applications that use Hive. The examples are
 
 * A simple /etc/passwd file analysis application using HiveTemplate via the Thrift API.
-* A simple /etc/passwd file analysis application using JDBC
+* A simple /etc/passwd file analysis application using HiveClient via the Thrift API.
 * A more complex Apache Log file analysis example using HiveRunner
 
 === Building and running
@@ -14,7 +14,7 @@ Use the following commands to build and run the sample
 
     $ mvn clean package
     $ sh ./target/appassembler/bin/hiveApp
-    $ sh ./target/appassembler/bin/hiveAppJdbc
+    $ sh ./target/appassembler/bin/hiveClientApp
     $ sh ./target/appassembler/bin/hiveAppWithApacheLogs
 
 
