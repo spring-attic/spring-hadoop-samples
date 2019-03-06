@@ -198,15 +198,15 @@
 	<repositories>	
 		<repository>
 			<id>hortonworks</id>
-			<url>http://repo.hortonworks.com/content/repositories/releases</url>
+			<url>https://repo.hortonworks.com/content/repositories/releases</url>
 		</repository>
 		<repository>
 			<id>hortonworks-jetty</id>
-			<url>http://repo.hortonworks.com/content/repositories/jetty-hadoop</url>
+			<url>https://repo.hortonworks.com/content/repositories/jetty-hadoop</url>
 		</repository>
 		<repository>
 			<id>spring-milestone</id>
-			<url>http://repo.spring.io/libs-milestone</url>
+			<url>https://repo.spring.io/libs-milestone</url>
 		</repository>
 	</repositories>
 
