@@ -17,7 +17,7 @@ subprojects { subproject ->
 	apply plugin: 'idea'
 	version =  '0.1.0'
 	repositories {
-		mavenCentral()
+		maven { url 'https://repo.maven.apache.org/maven2/' }
 		maven { url "http://repo.spring.io/libs-release" }
 	}
 	task copyJars(type: Copy) {
