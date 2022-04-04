@@ -1,3 +1,5 @@
+== spring-hadoop-samples is no longer actively maintained by VMware, Inc.
+
 == Sample Applications for Spring for Apache Hadoop
 
 This repository contains several sample applications that show how you can use
