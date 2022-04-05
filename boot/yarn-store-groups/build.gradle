@@ -1,6 +1,6 @@
 buildscript {
 	repositories {
-		maven { url "http://repo.spring.io/libs-release" }
+		maven { url "https://repo.spring.io/libs-release" }
 	}
 	dependencies {
 		classpath("org.springframework.boot:spring-boot-gradle-plugin:1.2.3.RELEASE")
@@ -18,7 +18,7 @@ subprojects { subproject ->
 	version =  '0.1.0'
 	repositories {
 		mavenCentral()
-		maven { url "http://repo.spring.io/libs-release" }
+		maven { url "https://repo.spring.io/libs-release" }
 	}
 	task copyJars(type: Copy) {
 		from "$buildDir/libs"

@@ -43,7 +43,7 @@
     <repositories>
         <repository>
             <id>spring-release</id>
-            <url>http://repo.spring.io/libs-release</url>
+            <url>https://repo.spring.io/libs-release</url>
             <snapshots><enabled>false</enabled></snapshots>
         </repository>
     </repositories>
@@ -51,7 +51,7 @@
     <pluginRepositories>
         <pluginRepository>
             <id>spring-release</id>
-            <url>http://repo.spring.io/libs-release</url>
+            <url>https://repo.spring.io/libs-release</url>
             <snapshots><enabled>false</enabled></snapshots>
         </pluginRepository>
     </pluginRepositories>
